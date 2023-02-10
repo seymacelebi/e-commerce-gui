@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-toolbar dark prominent>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+      <v-btn variant="outlined" icon color="secondary">
+        <v-icon>mdi-format-list-bulleted-square</v-icon>
+      </v-btn>
       <v-toolbar-title>ECommerce</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -23,7 +24,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import ProductList from "../components/products/ProductList.vue";
 export default defineComponent({
   name: "AppHeader",
+  components: { ProductList },
 });
 </script>

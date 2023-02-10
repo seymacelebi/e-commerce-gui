@@ -26,11 +26,13 @@
         </v-col>
       </v-row>
     </v-container>
+    <AppFooter />
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import AppFooter from "../components/AppFooter.vue";
 import AppHeader from "../components/AppHeader.vue";
 import CategoryList from "../components/categories/CategoryList.vue";
 import ProductList from "../components/products/ProductList.vue";
@@ -39,6 +41,6 @@ export default defineComponent({
   data: () => ({
     toggle_exclusive: 1,
   }),
-  components: { AppHeader, CategoryList, ProductList },
+  components: { AppHeader, CategoryList, ProductList, AppFooter },
 });
 </script>
