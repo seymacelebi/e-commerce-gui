@@ -1,28 +1,37 @@
 <template>
   <v-row>
-    <v-col v-for="category in categories" :key="category.title">
+    <v-col v-for="category in categories" :key="category.id">
       <v-card class="mx-auto" max-width="300">
-        <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="150px"
-          cove
-        ></v-img>
-        <v-card-text> {{ category.title }} </v-card-text>
+        <v-img :src="category.url" height="150px" cove></v-img>
+        <v-card-text> {{ category.name }} </v-card-text>
       </v-card>
     </v-col>
   </v-row>
 </template>
 <script lang="ts">
+import axios from "axios";
 export default {
   data: () => ({
-    categories: [
-      { img: "01.png", title: "Dış Giyim" },
-      { img: "02.png", title: "Üst Giyim" },
-      { img: "3.png", title: "Alt Giyim" },
-      { img: "4.png", title: "Takım" },
-      { img: "5.png", title: "Elbise" },
-    ],
+    categories: [],
   }),
+  methods: {
+    // getCategoryList() {
+    //   try {
+    //     const categories = axios
+    //       .get(" http://localhost:3000/categories")
+    //       .then((response: any) => (this.categories = response.data));
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
+    async getCategoryList() {
+      const response = await axios.get(" http://localhost:3000/categories");
+      this.categories = response.data;
+    },
+  },
+  mounted() {
+    this.getCategoryList();
+  },
 };
 </script>
 

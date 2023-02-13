@@ -1,0 +1,28 @@
+{
+    "products":[],
+    "categories": [
+    {
+        "id": 1,
+        "name":"Dış Giyim",     
+        "url":"https://www.linkpicture.com/q/download_409.jpg"
+    },
+    {
+        "id": 2,
+        "name":"Üst Giyim",
+        "url":"https://www.linkpicture.com/q/download-1_101.jpg"
+        
+    },
+    {
+        "id": 3,
+        "name":"Alt Giyim",
+        "url":"https://www.linkpicture.com/q/75-1000x1500.webp"
+        
+    },
+    {
+        "id": 4,
+        "name":"Elbise",
+       "url":"https://www.linkpicture.com/q/ALLEN1-1000x1500.webp"
+        
+    }
+]
+}
