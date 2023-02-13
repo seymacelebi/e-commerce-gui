@@ -8,10 +8,10 @@
       v-for="product in products"
       :key="product.title"
     >
-      <v-card class="mx-auto" max-width="344">
+      <v-card class="mx-auto" max-width="400">
         <v-img
           src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="200px"
+          height="300px"
           cover
         ></v-img>
 

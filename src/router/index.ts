@@ -5,6 +5,7 @@ const routes = [
     path: "/",
     name: "HomeView",
     component: HomeView,
+   
   },
 ];
 
