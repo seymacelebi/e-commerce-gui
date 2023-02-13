@@ -1,5 +1,41 @@
 {
-    "products":[],
+    "products":[
+    {
+        "id":1,
+        "title":"Palto",
+        "description":"Kemerli el yapımı palto",
+        "price":"700$",
+        "url":"https://www.linkpicture.com/q/download_409.jpg",
+        "categoryId":"1"
+    },
+    {
+        "id":2,
+        "title":"Elbise",
+        "description":"Kemerli Elbise",
+        "price":"100$",
+        "url":"https://www.linkpicture.com/q/ALLEN1-1000x1500.webp",
+        "categoryId":"2"
+    },
+    {
+        "id":3,
+        "title":"Pantolon",
+        "description":"Palazzo Pantolon",
+        "price":"50$",
+        "url":"https://www.linkpicture.com/q/download-3_32.jpg",
+        "categoryId":"3"
+    },
+    {
+        "id":4,
+        "title":"Palto",
+        "description":"Kapüşonlu kapitone anorak",
+        "price":"150$",
+        "url":"https://www.linkpicture.com/q/download-4_43.jpg",
+        "categoryId":"1"
+    }
+
+ 
+],
+
     "categories": [
     {
         "id": 1,

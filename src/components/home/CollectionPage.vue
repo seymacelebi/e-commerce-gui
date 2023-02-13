@@ -36,15 +36,15 @@ export default {
   data: () => ({
     collections: [
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        img: "https://www.linkpicture.com/q/download-5_24.jpg",
         title: "Kadın",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        img: "https://www.linkpicture.com/q/download-2_46.jpg",
         title: "Erkek",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        img: "https://www.linkpicture.com/q/download-6_13.jpg",
         title: "Çocuk",
       },
     ],
