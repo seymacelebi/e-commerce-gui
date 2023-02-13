@@ -17,6 +17,13 @@
       </v-btn>
 
       <v-btn icon>
+        <v-icon>mdi-cart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon size="large">mdi-account</v-icon>
+      </v-btn>
+      <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-toolbar>
@@ -27,6 +34,7 @@ import { defineComponent } from "vue";
 import ProductList from "../components/products/ProductList.vue";
 export default defineComponent({
   name: "AppHeader",
+  data: () => ({}),
   components: { ProductList },
 });
 </script>

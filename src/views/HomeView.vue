@@ -23,6 +23,13 @@
             <v-btn variant="tonal" color="green">See All</v-btn>
           </v-toolbar>
           <ProductList />
+          <v-card flat color="#E2F2E5" class="rounded-xl mt-8">
+            <v-toolbar flat color="transparent" class="mb-4">
+              <v-toolbar-title class="text-h6 mt-5">Collection</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <CollectionPage />
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -35,12 +42,19 @@ import { defineComponent } from "vue";
 import AppFooter from "../components/AppFooter.vue";
 import AppHeader from "../components/AppHeader.vue";
 import CategoryList from "../components/categories/CategoryList.vue";
+import CollectionPage from "../components/home/CollectionPage.vue";
 import ProductList from "../components/products/ProductList.vue";
 export default defineComponent({
   name: "HomeView",
   data: () => ({
     toggle_exclusive: 1,
   }),
-  components: { AppHeader, CategoryList, ProductList, AppFooter },
+  components: {
+    AppHeader,
+    CategoryList,
+    ProductList,
+    AppFooter,
+    CollectionPage,
+  },
 });
 </script>
