@@ -2,7 +2,12 @@
   <v-row>
     <v-col v-for="category in categories" :key="category.id">
       <v-card class="mx-auto" max-width="300">
-        <v-img :src="category.url" height="150px" cove></v-img>
+        <v-img
+          :src="category.url"
+          height="150px"
+          @click="$router.push({ name: '/TopClothesList' })"
+          cove
+        ></v-img>
         <v-card-text> {{ category.name }} </v-card-text>
       </v-card>
     </v-col>

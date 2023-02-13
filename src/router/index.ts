@@ -5,6 +5,13 @@ const routes = [
     path: "/",
     name: "HomeView",
     component: HomeView,
+    children: [
+      {
+        path: "/TopClothesList",
+        name: "TopClothesList",
+        component: () => import("../components/products/TopClothesList.vue"),
+      },
+    ],
   },
 ];
 
