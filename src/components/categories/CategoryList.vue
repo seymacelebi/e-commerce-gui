@@ -5,7 +5,7 @@
         <v-img
           :src="category.url"
           height="150px"
-          @click="$router.push({ name: '/TopClothesList' })"
+          @click="$router.push({ name: '/topclothes' })"
           cove
         ></v-img>
         <v-card-text> {{ category.name }} </v-card-text>
@@ -17,7 +17,7 @@
 import axios from "axios";
 export default {
   data: () => ({
-    categories: [],
+    categories: [] as any,
   }),
   methods: {
     // getCategoryList() {

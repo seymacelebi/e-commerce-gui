@@ -24,7 +24,9 @@
 
         <v-card-actions>
           <div class="mx-auto">
-            <v-btn variant="outlined" class="ma-2 pa-2"> Sayfaya Git </v-btn>
+            <v-btn variant="outlined" class="ma-2 pa-2">
+              <router-link to="/topClothes"> Sayfaya Git </router-link></v-btn
+            >
           </div>
         </v-card-actions>
       </v-card>

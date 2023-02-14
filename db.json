@@ -1,7 +1,7 @@
 {
     "products":[
     {
-        "id":1,
+        "productid":1,
         "title":"Palto",
         "description":"Kemerli el yapımı palto",
         "price":"700$",
@@ -9,7 +9,7 @@
         "categoryId":"1"
     },
     {
-        "id":2,
+        "productid":2,
         "title":"Elbise",
         "description":"Kemerli Elbise",
         "price":"100$",
@@ -17,7 +17,7 @@
         "categoryId":"2"
     },
     {
-        "id":3,
+        "productid":3,
         "title":"Pantolon",
         "description":"Palazzo Pantolon",
         "price":"50$",
@@ -25,7 +25,7 @@
         "categoryId":"3"
     },
     {
-        "id":4,
+        "productid":4,
         "title":"Palto",
         "description":"Kapüşonlu kapitone anorak",
         "price":"150$",
