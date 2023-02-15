@@ -47,17 +47,28 @@
 </template>
 <script lang="ts">
 import axios from "axios";
-
+import { computed } from "vue";
 export default {
   data: () => ({
     products: [] as any,
   }),
+  provide() {
+    return {
+      products: this.products,
+    };
+  },
 
   methods: {
-    async getProductList() {
-      const response = await axios.get(" http://localhost:3000/products");
-      this.products = response.data;
+    getProductList() {
+      axios.get(" http://localhost:3000/products").then((res: any) => {
+        console.log("res", res);
+        this.products = res.data || [];
+      });
     },
+    // async getProductList() {
+    //   const response = await axios.get(" http://localhost:3000/products");
+    //   this.products = response.data;
+    // },
   },
 
   mounted() {

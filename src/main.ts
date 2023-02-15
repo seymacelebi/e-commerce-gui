@@ -8,6 +8,7 @@ import { appAxios } from "./utils/appAxios";
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);
-app.config.globalProperties.$appAxios = appAxios;
+app.provide("axios", app.config.globalProperties.axios);
+// app.config.globalProperties.$appAxios = appAxios;
 app.use(vuetify);
 app.mount("#app");
