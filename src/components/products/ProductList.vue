@@ -47,20 +47,14 @@
 </template>
 <script lang="ts">
 import axios from "axios";
-import { computed } from "vue";
+import ProductDetail from "./ProductDetail.vue";
 export default {
   data: () => ({
     products: [] as any,
   }),
-  provide() {
-    return {
-      products: this.products,
-    };
-  },
-
   methods: {
     getProductList() {
-      axios.get(" http://localhost:3000/products").then((res: any) => {
+      axios.get("http://localhost:3000/products").then((res: any) => {
         console.log("res", res);
         this.products = res.data || [];
       });

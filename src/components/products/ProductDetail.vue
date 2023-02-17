@@ -3,15 +3,15 @@
     <AppHeader />
     <v-container fluid>
       <v-row>
-        <v-col cols="6" v-for="(product, index) in products" :key="index">
-          <v-card class="ml-15 mt-10 rounded-xl" max-width="800" flat outlined>
+        <v-col cols="6">
+          <v-card class="ml-15 mt-10 rounded-xl" max-width="500" flat outlined>
             <div align="center" justify="center">
               <v-img max-width="800" contain :src="product.url"></v-img>
             </div>
 
-            <v-card-title primary-title class="mx-auto">{{
+            <!-- <v-card-title primary-title class="mx-auto">{{
               product.title
-            }}</v-card-title>
+            }}</v-card-title> -->
             <v-card-actions> </v-card-actions>
           </v-card>
         </v-col>
@@ -28,14 +28,24 @@
 
             <v-card-item>
               <v-card-title>
-                <p class="text-h4 text--primary">Origin</p></v-card-title
+                <p class="text-h4 text--primary">
+                  {{ product.title }}
+                </p></v-card-title
               >
             </v-card-item>
 
             <v-card-text>
               <div>
-                Small plates, salads & sandwiches - an intimate setting with 12
-                indoor seats plus patio seating.
+                <p class="text-h6 text--primary">
+                  {{ product.price }}
+                </p>
+              </div>
+            </v-card-text>
+            <v-card-text>
+              <div>
+                <p class="text-h6 text--primary">
+                  {{ product.description }}
+                </p>
               </div>
             </v-card-text>
 
@@ -47,34 +57,44 @@
               <v-btn variant="tonal" color="success"> Sepete Ekle </v-btn>
             </v-card-actions>
           </v-card>
-          <v-card max-width="600">
+          <!-- <v-card max-width="600">
             <v-card-item>
               <div>
                 <v-card-text class="pb-0">
                   <p>
-                    late 16th century (as a noun denoting a place where alms
-                    were distributed): from medieval Latin eleemosynarius, from
-                    late Latin eleemosyna ‘alms’, from Greek eleēmosunē
-                    ‘compassion’
+                    {{ product.description }}
                   </p>
                 </v-card-text>
               </div>
             </v-card-item>
-          </v-card>
+          </v-card> -->
         </v-col>
       </v-row>
     </v-container>
   </v-app>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import axios from "axios";
+import { defineComponent, inject } from "vue";
 import AppHeader from "../AppHeader.vue";
 export default defineComponent({
   name: "ProductDetail",
-
-  inject: ["products"],
-  components: {
-    AppHeader,
+  data: () => ({
+    product: [] as any,
+  }),
+  components: { AppHeader },
+  mounted() {
+    this.getProductListById();
+  },
+  methods: {
+    getProductListById() {
+      const productid = +this.$route.params.productid;
+      axios
+        .get("http://localhost:3000/products?productid=" + productid)
+        .then((res: any) => {
+          this.product = res.data[0] || [];
+        });
+    },
   },
 });
 </script>
