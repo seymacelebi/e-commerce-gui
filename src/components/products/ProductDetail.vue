@@ -54,7 +54,9 @@
             <div class="px-4"></div>
 
             <v-card-actions>
-              <v-btn variant="tonal" color="success"> Sepete Ekle </v-btn>
+              <v-btn variant="tonal" color="success">
+                <v-icon> mdi-shopping </v-icon> Sepete Ekle
+              </v-btn>
             </v-card-actions>
           </v-card>
           <!-- <v-card max-width="600">

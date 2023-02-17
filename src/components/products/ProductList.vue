@@ -14,11 +14,17 @@
         <v-card-title> {{ product.title }} </v-card-title>
 
         <v-card-subtitle>{{ product.description }} </v-card-subtitle>
+        <star-rating></star-rating>
 
-        <v-card-actions>
-          <v-btn outlined class="mt-n2 add">
+        <v-card-actions @click="decrement">
+          <v-btn
+            outlined
+            class="mt-n2 add"
+            @click="() => updateQuantity(product.quantity - 1)"
+          >
             <v-icon color="green" variant="outlined"> mdi-minus </v-icon>
           </v-btn>
+          <p>{{ product.quantity }}</p>
           <v-btn outlined class="mt-n2 add">
             <v-icon color="green" variant="outlined"> mdi-plus </v-icon>
           </v-btn>
@@ -37,7 +43,7 @@
             >Detaya Git</v-btn
           >
 
-          <v-btn class="mx-2 mt-n3" color="green">
+          <v-btn class="mx-2 mt-n3" color="green" @click="addToCart(product)">
             <v-icon> mdi-shopping </v-icon>
           </v-btn>
         </v-card-actions>
@@ -47,17 +53,27 @@
 </template>
 <script lang="ts">
 import axios from "axios";
-import ProductDetail from "./ProductDetail.vue";
+import { useCartStore } from "../../store/cartStore";
+const cartStore = useCartStore();
 export default {
   data: () => ({
     products: [] as any,
+    rating: 3,
   }),
+
   methods: {
     getProductList() {
       axios.get("http://localhost:3000/products").then((res: any) => {
         console.log("res", res);
         this.products = res.data || [];
       });
+    },
+    updateQuantity(quantity: any) {
+      console.log(this.products[0].id, "sss");
+      console.log("aaa", quantity);
+    },
+    addToCart(product: any) {
+      console.log("addToCart", product);
     },
     // async getProductList() {
     //   const response = await axios.get(" http://localhost:3000/products");
