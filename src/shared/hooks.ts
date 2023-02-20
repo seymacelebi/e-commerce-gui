@@ -1,5 +1,5 @@
 import { onUnmounted } from "vue";
-import { useCartStore } from "../store/index";
+import { useCartStore } from "../store/cartStore";
 
 export const CART_STORAGE = "CART_STORAGE";
 

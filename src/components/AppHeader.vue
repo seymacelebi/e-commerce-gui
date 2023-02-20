@@ -4,7 +4,14 @@
       <v-btn variant="outlined" icon color="secondary">
         <v-icon>mdi-format-list-bulleted-square</v-icon>
       </v-btn>
-      <v-toolbar-title>ECommerce</v-toolbar-title>
+      <v-toolbar-title
+        @click="
+          $router.push({
+            name: 'HomeView',
+          })
+        "
+        >ECommerce</v-toolbar-title
+      >
 
       <v-spacer></v-spacer>
 
@@ -16,7 +23,14 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
 
-      <v-btn icon>
+      <v-btn
+        icon
+        @click="
+          $router.push({
+            name: 'CartList',
+          })
+        "
+      >
         <v-icon>mdi-cart</v-icon>
       </v-btn>
 

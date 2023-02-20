@@ -43,7 +43,7 @@
             >Detaya Git</v-btn
           >
 
-          <v-btn class="mx-2 mt-n3" color="green" @click="addToCart(product)">
+          <v-btn class="mx-2 mt-n3" color="green" @click="addBasket(product)">
             <v-icon> mdi-shopping </v-icon>
           </v-btn>
         </v-card-actions>
@@ -54,7 +54,9 @@
 <script lang="ts">
 import axios from "axios";
 import { useCartStore } from "../../store/cartStore";
-const cartStore = useCartStore();
+import { mapState, mapActions } from "pinia";
+import type { BasketObjectType } from "../../models/types";
+import { useProductStore } from "../../store/productstore";
 export default {
   data: () => ({
     products: [] as any,
@@ -75,6 +77,11 @@ export default {
     addToCart(product: any) {
       console.log("addToCart", product);
     },
+    addBasket(item: BasketObjectType) {
+      this.addOrRemoveBasket(item);
+      console.log(item, "laf");
+    },
+    ...mapActions(useCartStore, ["addOrRemoveBasket"]),
     // async getProductList() {
     //   const response = await axios.get(" http://localhost:3000/products");
     //   this.products = response.data;

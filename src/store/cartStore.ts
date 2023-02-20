@@ -1,27 +1,41 @@
 import { defineStore } from "pinia";
 
+export interface BasketObjectType {
+  name: string;
+  icon: string;
+}
+const loadFromStorage = (key: string, defaultValue: any): any => {
+  const item = localStorage.getItem(key);
+  if (item) {
+    return JSON.parse(item);
+  }
+  return defaultValue;
+};
 export const useCartStore = defineStore("cart", {
   state: () => {
     return {
-      cartContent: {},
+      baskets: loadFromStorage(
+        "userBaskets",
+        [] as BasketObjectType[]
+      ) as BasketObjectType[],
     };
   },
   getters: {
-    formattedCart() {},
+    getBasketsState(state) {
+      return state.baskets;
+    },
   },
   actions: {
-    addToCart(productId: any) {
-      if (this.cartContent.hasOwnProperty(productId)) {
-        this.cartContent[productId] = {
-          productId,
-          quantity: this.cartContent[productId].quantity + 1,
-        };
+    addOrRemoveBasket(newFav: BasketObjectType) {
+      const findedIndex = this.baskets.findIndex(
+        (fav) => fav.name === newFav.name
+      );
+      if (findedIndex == -1) {
+        this.baskets.push(newFav);
       } else {
-        this.cartContent[productId] = {
-          productId,
-          quantity: 1,
-        };
+        this.baskets = this.baskets.filter((fav) => fav.name !== newFav.name);
       }
+      localStorage.setItem("userBaskets", JSON.stringify(this.baskets));
     },
   },
 });
