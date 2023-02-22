@@ -1,7 +1,7 @@
 <template>
   <AppHeader></AppHeader>
   <v-row>
-    <v-col
+    <v-col class="mt-15"
       ><v-card
         max-width="800"
         class="ml-15 mt-10"
@@ -10,20 +10,17 @@
         :value="index"
       >
         <v-card-item>
-          <div>
-            <div class="text-overline mb-1">{{ item.name }}</div>
-            <div class="text-h6 mb-1">Headline</div>
+          <v-col> <v-img :src="item.url" height="300px" cover></v-img></v-col>
+          <v-col>
+            <div class="text-overline mb-1">{{ item.title }}</div>
+            <div class="text-h6 mb-1">{{ item.price }}</div>
             <div class="text-caption">
-              Greyhound divisely hello coldly fonwderfully
-            </div>
-          </div>
+              {{ item.description }}
+            </div></v-col
+          >
         </v-card-item>
-
-        <v-card-actions>
-          <v-btn variant="outlined"> Button </v-btn>
-        </v-card-actions>
-      </v-card></v-col
-    >
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 <script lang="ts">

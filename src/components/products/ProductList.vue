@@ -74,9 +74,7 @@ export default {
       console.log(this.products[0].id, "sss");
       console.log("aaa", quantity);
     },
-    addToCart(product: any) {
-      console.log("addToCart", product);
-    },
+
     addBasket(item: BasketObjectType) {
       this.addOrRemoveBasket(item);
       console.log(item, "laf");

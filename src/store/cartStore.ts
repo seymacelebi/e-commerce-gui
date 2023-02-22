@@ -32,10 +32,12 @@ export const useCartStore = defineStore("cart", {
       );
       if (findedIndex == -1) {
         this.baskets.push(newFav);
+        console.log(this.baskets, "BASKETS");
       } else {
         this.baskets = this.baskets.filter((fav) => fav.name !== newFav.name);
       }
       localStorage.setItem("userBaskets", JSON.stringify(this.baskets));
+      console.log(this.baskets, "sss");
     },
   },
 });

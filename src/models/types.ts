@@ -1,4 +1,5 @@
 export interface BasketObjectType {
-  name: string;
-  icon: string;
+  title: string;
+  description: string;
+  price: string;
 }
