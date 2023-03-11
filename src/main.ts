@@ -5,8 +5,11 @@ import { vuetify } from "./plugins/vuetify";
 import { createPinia } from "pinia";
 import router from "./router";
 import { appAxios } from "./utils/appAxios";
+const pinia = createPinia();
+
 const app = createApp(App);
-app.use(createPinia());
+
+app.use(pinia);
 app.use(router);
 app.provide("axios", app.config.globalProperties.axios);
 // app.config.globalProperties.$appAxios = appAxios;

@@ -5,18 +5,17 @@
       xs="12"
       sm="6"
       md="4"
-      v-for="(product, index) in products"
+      v-for="(product, index) in getProductGetters"
       :key="index"
     >
       <v-card class="mx-auto" max-width="400">
-        <v-img :src="product.url" height="300px" cover> </v-img>
+        <v-img :src="product.image" height="300px" cover> </v-img>
 
         <v-card-title> {{ product.title }} </v-card-title>
 
         <v-card-subtitle>{{ product.description }} </v-card-subtitle>
-        <star-rating></star-rating>
 
-        <v-card-actions @click="decrement">
+        <v-card-actions>
           <v-btn
             outlined
             class="mt-n2 add"
@@ -37,15 +36,15 @@
             @click="
               $router.push({
                 name: 'ProductDetail',
-                params: { productid: product.productid },
+                params: { productid: product.productId },
               })
             "
             >Detaya Git</v-btn
           >
-
+          <!-- 
           <v-btn class="mx-2 mt-n3" color="green" @click="addBasket(product)">
             <v-icon> mdi-shopping </v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-card-actions>
       </v-card>
     </v-col>
@@ -63,31 +62,37 @@ export default {
     rating: 3,
   }),
 
-  methods: {
-    getProductList() {
-      axios.get("http://localhost:3000/products").then((res: any) => {
-        console.log("res", res);
-        this.products = res.data || [];
-      });
+  computed: {
+    ...mapState(useProductStore, ["getProductGetters"]),
+    ...mapState(useCartStore, ["getBasketGetters"]),
+    darkTheme(): boolean {
+      return this.$vuetify.theme.global.current.dark;
     },
+  },
+  methods: {
+    ...mapActions(useProductStore, { get: "getProductAction" }),
+    // getProductList() {
+    //   axios.get("http://localhost:3000/products").then((res: any) => {
+    //     console.log("res", res);
+    //     this.products = res.data || [];
+    //   });
+    // },
     updateQuantity(quantity: any) {
       console.log(this.products[0].id, "sss");
       console.log("aaa", quantity);
     },
 
-    addBasket(item: BasketObjectType) {
-      this.addOrRemoveBasket(item);
-      console.log(item, "laf");
-    },
-    ...mapActions(useCartStore, ["addOrRemoveBasket"]),
-    // async getProductList() {
-    //   const response = await axios.get(" http://localhost:3000/products");
-    //   this.products = response.data;
+    // addBasket(item: BasketObjectType) {
+    //   this.addOrRemoveBasket(item);
+    //   console.log(item, "laf");
     // },
+    // ...mapActions(useCartStore, ["addOrRemoveBasket"]),
   },
 
   mounted() {
-    this.getProductList();
+    console.log(this.getProductGetters, "dsdsd");
+    // this.getProductList();
+    this.getProductGetters;
   },
 };
 </script>

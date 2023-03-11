@@ -1,18 +1,18 @@
-export class ProductDto {
+export class Product {
   constructor() {
-    this.productid = 0;
+    this.productId = 0;
     this.title = "";
     this.description = "";
-    this.price = "";
-    this.url = "";
+    this.price = 0;
+    this.image = "";
     this.quantity = 1;
     this.categoryId = 0;
   }
-  productid: number;
+  productId: number;
   title: string;
   description: string;
-  price: string;
-  url: string;
+  price: number;
+  image: string;
   quantity: number;
   categoryId: number;
 }
