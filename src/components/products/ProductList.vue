@@ -55,7 +55,7 @@ import axios from "axios";
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import type { BasketObjectType } from "../../models/types";
-import { useProductStore } from "../../store/productstore";
+import { useProductStore } from "../../store/productStore";
 export default {
   data: () => ({
     products: [] as any,
@@ -65,23 +65,16 @@ export default {
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
-    darkTheme(): boolean {
-      return this.$vuetify.theme.global.current.dark;
-    },
+    ...mapActions(useProductStore, ['getAllProduct'])
   },
   methods: {
-    ...mapActions(useProductStore, { get: "getProductAction" }),
     // getProductList() {
     //   axios.get("http://localhost:3000/products").then((res: any) => {
     //     console.log("res", res);
     //     this.products = res.data || [];
     //   });
     // },
-    updateQuantity(quantity: any) {
-      console.log(this.products[0].id, "sss");
-      console.log("aaa", quantity);
-    },
-
+  
     // addBasket(item: BasketObjectType) {
     //   this.addOrRemoveBasket(item);
     //   console.log(item, "laf");
@@ -90,9 +83,11 @@ export default {
   },
 
   mounted() {
-    console.log(this.getProductGetters, "dsdsd");
-    // this.getProductList();
-    this.getProductGetters;
+    // console.log(this.getProductGetters, "dsdsd");
+     // this.getProductList();
+    // this.getProductGetters;
+    this.getAllProduct
+    console.log("produxt", this.getAllProduct)
   },
 };
 </script>
