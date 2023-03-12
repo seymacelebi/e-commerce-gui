@@ -31,6 +31,7 @@ export const useCartStore = defineStore("cart", {
       return state.product;
     },
     getBasketGetters: (state) => {
+      console.log("oldu")
       return state.basket;
     },
     GetBasketPrice: (state) => {
@@ -47,51 +48,26 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    async getProductAction() {
-      await axios
-        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-        .then((product) => {
-          this.product = product.data;
-          console.log("productgettersgelen", product);
-          //quantity entrübütü yoktu gelen data da ekledim.
-          this.product.forEach((x: any) => {
-            x.quantity = 0;
-          });
-        });
-    },
     setfilter(catId: number) {
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.categoryId == catId
       );
       console.log("actions girdi");
     },
-    //set addl ile actıons component içine cagırıldığında parametle oalrak "pro" alacak.
     setAddBasket(pro: Product) {
       this.basket = [...this.basket, pro];
       this.totalPrice += pro.price;
       pro.quantity++;
     },
-    //silme func.eğert yollanan ürün id si ile sepetteki ürünün id si eşleşiyor ise siliyor.
-    //toplam paradan silinen ürünün parasını cıkartıyor.ve ürün miktarını bir azaltıyor.
-    setDltBasket(pro: Product) {
-      let equalId = this.basket.find((x) => x.productId == pro.productId);
-      if (equalId) {
-        this.basket.pop(pro);
-        this.totalPrice -= pro.price;
-        pro.quantity--;
-      } else {
-        return this.totalPrice;
-      }
-    },
-
+  
     addOrRemoveFavorite(pro: Product) {
       const findedIndex = this.favorites.findIndex(
-        (fav: any) => fav.id === pro.id
+        (fav: any) => fav.id === pro.productId
       );
       if (findedIndex === -1) {
         this.favorites = [...this.favorites, pro];
       } else {
-        this.favorites = this.favorites.filter((fav: any) => fav.id !== pro.id);
+        this.favorites = this.favorites.filter((fav: any) => fav.id !== pro.productId);
       }
       localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },

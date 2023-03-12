@@ -16,19 +16,7 @@
         <v-card-subtitle>{{ product.description }} </v-card-subtitle>
 
         <v-card-actions>
-          <v-btn rounded="lg"  class="mt-n2 add"  > {{ product.price}} $ </v-btn>
-          <!-- <v-btn
-            outlined
-            class="mt-n2 add"
-            @click="() => updateQuantity(product.quantity - 1)"
-          >
-
-            <v-icon color="green" variant="outlined"> mdi-minus </v-icon>
-          </v-btn>
-          <p>{{ product.quantity }}</p>
-          <v-btn outlined class="mt-n2 add">
-            <v-icon color="green" variant="outlined"> mdi-plus </v-icon>
-          </v-btn> -->
+          <v-btn rounded="lg" class="mt-n2 add"> {{ product.price }} $ </v-btn>
 
           <v-spacer></v-spacer>
 
@@ -66,17 +54,17 @@ export default {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
+    ...mapActions(useCartStore, ["setAddBasket"]),
   },
   methods: {
-    // addBasket(item: BasketObjectType) {
-    //   this.addOrRemoveBasket(item);
-    //   console.log(item, "laf");
-    // },
-    // ...mapActions(useCartStore, ["addOrRemoveBasket"]),
+   
+   
   },
 
   mounted() {
     this.getAllProduct;
+    this.getBasketGetters;
+    console.log(this.getBasketGetters, "mounted");
   },
 };
 </script>
