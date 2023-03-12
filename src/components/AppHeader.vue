@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-toolbar dark prominent>
-      <v-btn variant="outlined" icon color="secondary">
-        <v-icon>mdi-format-list-bulleted-square</v-icon>
+      <v-btn  icon color="black">
+        <v-icon>mdi-weather-sunny</v-icon>
       </v-btn>
       <v-toolbar-title
         @click="

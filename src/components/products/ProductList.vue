@@ -16,17 +16,19 @@
         <v-card-subtitle>{{ product.description }} </v-card-subtitle>
 
         <v-card-actions>
-          <v-btn
+          <v-btn rounded="lg"  class="mt-n2 add"  > {{ product.price}} $ </v-btn>
+          <!-- <v-btn
             outlined
             class="mt-n2 add"
             @click="() => updateQuantity(product.quantity - 1)"
           >
+
             <v-icon color="green" variant="outlined"> mdi-minus </v-icon>
           </v-btn>
           <p>{{ product.quantity }}</p>
           <v-btn outlined class="mt-n2 add">
             <v-icon color="green" variant="outlined"> mdi-plus </v-icon>
-          </v-btn>
+          </v-btn> -->
 
           <v-spacer></v-spacer>
 
@@ -41,10 +43,10 @@
             "
             >Detaya Git</v-btn
           >
-          <!-- 
+
           <v-btn class="mx-2 mt-n3" color="green" @click="addBasket(product)">
             <v-icon> mdi-shopping </v-icon>
-          </v-btn> -->
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -63,11 +65,9 @@ export default {
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
-    ...mapActions(useProductStore, ['getAllProduct'])
+    ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
-
-  
     // addBasket(item: BasketObjectType) {
     //   this.addOrRemoveBasket(item);
     //   console.log(item, "laf");
@@ -76,9 +76,7 @@ export default {
   },
 
   mounted() {
-    
-    this.getAllProduct
-    
+    this.getAllProduct;
   },
 };
 </script>
