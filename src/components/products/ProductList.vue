@@ -36,7 +36,7 @@
             @click="
               $router.push({
                 name: 'ProductDetail',
-                params: { productid: product.productId },
+                params: { id: product.id },
               })
             "
             >Detaya Git</v-btn
@@ -51,10 +51,8 @@
   </v-row>
 </template>
 <script lang="ts">
-import axios from "axios";
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
-import type { BasketObjectType } from "../../models/types";
 import { useProductStore } from "../../store/productStore";
 export default {
   data: () => ({
@@ -68,12 +66,7 @@ export default {
     ...mapActions(useProductStore, ['getAllProduct'])
   },
   methods: {
-    // getProductList() {
-    //   axios.get("http://localhost:3000/products").then((res: any) => {
-    //     console.log("res", res);
-    //     this.products = res.data || [];
-    //   });
-    // },
+
   
     // addBasket(item: BasketObjectType) {
     //   this.addOrRemoveBasket(item);
@@ -83,11 +76,9 @@ export default {
   },
 
   mounted() {
-    // console.log(this.getProductGetters, "dsdsd");
-     // this.getProductList();
-    // this.getProductGetters;
+    
     this.getAllProduct
-    console.log("produxt", this.getAllProduct)
+    
   },
 };
 </script>

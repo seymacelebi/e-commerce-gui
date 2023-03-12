@@ -6,7 +6,7 @@
         <v-col cols="6">
           <v-card class="ml-15 mt-10 rounded-xl" max-width="500" flat outlined>
             <div align="center" justify="center">
-              <v-img max-width="800" contain :src="product.url"></v-img>
+              <v-img max-width="800" contain :src="product.image"></v-img>
             </div>
 
             <!-- <v-card-title primary-title class="mx-auto">{{
@@ -86,17 +86,25 @@ export default defineComponent({
   }),
   components: { AppHeader },
   mounted() {
-    this.getProductListById();
+    this.getProductById()
+    console.log(this.$route.params.id, "1212")
   },
   methods: {
-    getProductListById() {
-      const productid = +this.$route.params.productid;
-      axios
-        .get("http://localhost:3000/products?productid=" + productid)
-        .then((res: any) => {
-          this.product = res.data[0] || [];
-        });
-    },
+    // getProductListById() {
+    //   const id = +this.$route.params.id;
+    //   axios
+    //     .get("http://localhost:3000/products/" + id)
+    //     .then((res: any) => {
+    //       this.product = res.data[0] || [];
+    //     });
+    // },
+     async getProductById(){
+        const id = +this.$route.params.id;
+      const response = await fetch("https://fakestoreapi.com/products/"+ id)
+      const data = await response.json()
+      this.product = data
+      console.log(this.product, "product")
+    }
   },
 });
 </script>

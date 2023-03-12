@@ -36,17 +36,17 @@ export const useProductStore = defineStore("product", {
     },
   },
   actions: {
-    async getProductAction() {
-      await axios
-        .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-        .then((product) => {
-          this.product = product.data;
-          console.log("productgettersgelen", product);
-          this.product.forEach((x: any) => {
-            x.quantity = 0;
-          });
-        });
-    },
+    // async getProductAction() {
+    //   await axios
+    //     .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
+    //     .then((product) => {
+    //       this.product = product.data;
+    //       console.log("productgettersgelen", product);
+    //       this.product.forEach((x: any) => {
+    //         x.quantity = 0;
+    //       });
+    //     });
+    // },
     async getAllProduct(){
       const response = await fetch('https://fakestoreapi.com/products')
       const data = await response.json()
