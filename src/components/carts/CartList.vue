@@ -5,12 +5,12 @@
       ><v-card
         max-width="800"
         class="ml-15 mt-10"
-        v-for="(item, index) in getBasketsState"
+        v-for="(item, index) in getBasketGetters"
         :key="index"
         :value="index"
       >
         <v-card-item>
-          <v-col> <v-img :src="item.url" height="300px" cover></v-img></v-col>
+          <v-col> <v-img :src="item.image" height="300px" cover></v-img></v-col>
           <v-col>
             <div class="text-overline mb-1">{{ item.title }}</div>
             <div class="text-h6 mb-1">{{ item.price }}</div>
@@ -33,10 +33,10 @@ export default defineComponent({
   name: "CartList",
   data: () => ({}),
   computed: {
-    ...mapState(useCartStore, ["getBasketsState"]),
+    ...mapState(useCartStore, ["getBasketGetters"]),
   },
   methods: {
-    ...mapActions(useCartStore, ["addOrRemoveBasket"]),
+    ...mapActions(useCartStore, ["setAddBasket"]),
   },
   components: { AppHeader },
 });

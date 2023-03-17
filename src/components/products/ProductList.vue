@@ -32,7 +32,7 @@
             >Detaya Git</v-btn
           >
 
-          <v-btn class="mx-2 mt-n3" color="green" @click="addBasket(product)">
+          <v-btn class="mx-2 mt-n3" color="green" @click="addProduct(product)">
             <v-icon> mdi-shopping </v-icon>
           </v-btn>
         </v-card-actions>
@@ -47,6 +47,7 @@ import { useProductStore } from "../../store/productStore";
 export default {
   data: () => ({
     products: [] as any,
+
     rating: 3,
   }),
 
@@ -54,11 +55,13 @@ export default {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
-    ...mapActions(useCartStore, ["setAddBasket"]),
   },
   methods: {
-   
-   
+    ...mapActions(useCartStore, ["setAddBasket"]),
+    addProduct(product: any) {
+      this.setAddBasket(product);
+      console.log("ekledi", this.getBasketGetters);
+    },
   },
 
   mounted() {
