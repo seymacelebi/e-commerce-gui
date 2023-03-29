@@ -2,29 +2,49 @@
   <AppHeader></AppHeader>
 
   <v-row>
-    <v-col class="mt-15"
-      ><v-card
-        max-width="800"
+    <v-col cols="6" class="mt-15">
+      <v-card
+        color="white"
+        theme="dark"
         class="ml-15 mt-10"
         v-for="(item, index) in getBasketGetters"
         :key="index"
         :value="index"
       >
-        <v-card-item>
-          <!-- <v-col>
-            <v-img :src="item.images[0]" height="300px" cover></v-img
-          ></v-col> -->
-          <v-col> <v-img :src="item.image" height="300px" cover></v-img></v-col>
+        <div class="d-flex flex-no-wrap justify-space-between">
+          <v-avatar class="ma-3" size="125" rounded="0">
+            <v-img :src="item.images[0]"></v-img>
+          </v-avatar>
+          <div>
+            <v-card-title class="text-h5"> {{ item.title }} </v-card-title>
 
-          <v-col>
-            <div class="text-overline mb-1">{{ item.title }}</div>
-            <div class="text-h6 mb-1">{{ item.price }}</div>
-            <div class="text-caption">
-              {{ item.description }}
-            </div></v-col
-          >
-        </v-card-item>
+            <v-card-title>{{ item.price }} $</v-card-title>
+            <v-card-subtitle> {{ item.description }}</v-card-subtitle>
+
+            <v-card-actions>
+              <v-btn
+                variant="outlined"
+                size="small"
+                icon="mdi-plus"
+                @click="addProduct(item)"
+              >
+              </v-btn>
+              <v-card-title> {{ item.quantity }} </v-card-title>
+              <v-btn
+                variant="outlined"
+                size="small"
+                icon="mdi-minus"
+                @click.prevent="deleteProduct()"
+              >
+              </v-btn>
+            </v-card-actions>
+          </div>
+        </div>
       </v-card>
+      <v-divider></v-divider>
+      <div class="d-flex flex-row-reverse mb-6">
+        <v-btn variant="outlined" class="ma-2 pa-2"> SATIN AL </v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -36,12 +56,24 @@ import { useCartStore } from "../../store/cartStore";
 
 export default defineComponent({
   name: "CartList",
-  data: () => ({}),
+  data: () => ({
+    products: [] as any,
+  }),
   computed: {
     ...mapState(useCartStore, ["getBasketGetters"]),
   },
   methods: {
-    ...mapActions(useCartStore, ["setAddBasket"]),
+    ...mapActions(useCartStore, ["setAddBasket", "setDeleteBasket"]),
+
+    addProduct(product: any) {
+      this.setAddBasket(product);
+      console.log("ekledi", this.getBasketGetters);
+    },
+    deleteProduct() {
+      this.setDeleteBasket(this.pro);
+      console.log("deneme");
+      console.log("silindi", this.pro);
+    },
   },
   components: { AppHeader },
 });

@@ -58,6 +58,10 @@ export const useCartStore = defineStore("cart", {
       this.basket.push(pro);
       console.log(this.basket, "basketaction");
     },
+    setDeleteBasket(pro: Product) {
+      this.basket.pop(pro);
+      pro.quantity--;
+    },
 
     addOrRemoveFavorite(pro: Product) {
       const findedIndex = this.favorites.findIndex(

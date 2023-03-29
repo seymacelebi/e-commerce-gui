@@ -4,7 +4,7 @@ export class Product {
     this.title = "";
     this.description = "";
     this.price = 0;
-    this.image = "";
+    this.images = "";
     this.quantity = 1;
     this.categoryId = 0;
   }
@@ -12,7 +12,7 @@ export class Product {
   title: string;
   description: string;
   price: number;
-  image: string;
+  images: string;
   quantity: number;
   categoryId: number;
 }

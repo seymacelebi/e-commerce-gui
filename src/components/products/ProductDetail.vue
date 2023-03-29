@@ -2,11 +2,11 @@
   <v-app>
     <AppHeader />
     <v-container fluid>
-      <v-row>
+      <v-row v-for="(product, index) in getProductGetters" :key="index">
         <v-col cols="6">
           <v-card class="ml-15 mt-10 rounded-xl" max-width="500" flat outlined>
             <div align="center" justify="center">
-              <v-img max-width="800" contain :src="product.image"></v-img>
+              <v-img max-width="800" contain :src="product.images[0]"></v-img>
             </div>
 
             <!-- <v-card-title primary-title class="mx-auto">{{
@@ -76,6 +76,8 @@
   </v-app>
 </template>
 <script lang="ts">
+import { useProductStore } from "../../store/productStore";
+import { mapState, mapActions } from "pinia";
 import axios from "axios";
 import { defineComponent, inject } from "vue";
 import AppHeader from "../AppHeader.vue";
@@ -86,8 +88,12 @@ export default defineComponent({
   }),
   components: { AppHeader },
   mounted() {
-    this.getProductById()
-    console.log(this.$route.params.id, "1212")
+    // this.getProductById();
+    console.log(this.$route.params.id, "1212");
+  },
+  computed: {
+    ...mapState(useProductStore, ["getProductGetters"]),
+    ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
     // getProductListById() {
@@ -98,13 +104,15 @@ export default defineComponent({
     //       this.product = res.data[0] || [];
     //     });
     // },
-     async getProductById(){
-        const id = +this.$route.params.id;
-      const response = await fetch("https://fakestoreapi.com/products/"+ id)
-      const data = await response.json()
-      this.product = data
-      console.log(this.product, "product")
-    }
+    // async getProductById() {
+    //   const id = +this.$route.params.id;
+    //   const response = await fetch(
+    //     "https://api.escuelajs.co/api/v1/products?offset=0&limit=70" + id
+    //   );
+    //   const data = await response.json();
+    //   this.product = data;
+    //   console.log(this.product, "product");
+    // },
   },
 });
 </script>

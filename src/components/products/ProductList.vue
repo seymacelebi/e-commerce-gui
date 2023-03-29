@@ -9,7 +9,7 @@
       :key="index"
     >
       <v-card class="mx-auto" max-width="400">
-        <v-img :src="product.image" height="300px" cover> </v-img>
+        <v-img :src="product.images[0]" height="300px" cover> </v-img>
 
         <v-card-title> {{ product.title }} </v-card-title>
 
@@ -17,7 +17,9 @@
 
         <v-card-actions>
           <v-btn rounded="lg" class="mt-n2 add"> {{ product.price }} $ </v-btn>
-
+          <!-- <v-btn variant="outlined" size="small"> - </v-btn>
+          <v-card-title> 0 </v-card-title>
+          <v-btn variant="outlined" size="small"> + </v-btn> -->
           <v-spacer></v-spacer>
 
           <v-btn
