@@ -1,5 +1,6 @@
 <template>
   <AppHeader></AppHeader>
+
   <v-row>
     <v-col class="mt-15"
       ><v-card
@@ -10,7 +11,11 @@
         :value="index"
       >
         <v-card-item>
+          <!-- <v-col>
+            <v-img :src="item.images[0]" height="300px" cover></v-img
+          ></v-col> -->
           <v-col> <v-img :src="item.image" height="300px" cover></v-img></v-col>
+
           <v-col>
             <div class="text-overline mb-1">{{ item.title }}</div>
             <div class="text-h6 mb-1">{{ item.price }}</div>
