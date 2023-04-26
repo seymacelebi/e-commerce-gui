@@ -55,8 +55,9 @@ export const useCartStore = defineStore("cart", {
       console.log("actions girdi");
     },
     setAddBasket(pro: Product) {
-      this.basket.push(pro);
+      this.basket = [...this.basket, pro];
       console.log(this.basket, "basketaction");
+      console.log(this.product, "aaa");
     },
     setDeleteBasket(pro: Product) {
       this.basket.pop(pro);
@@ -65,14 +66,12 @@ export const useCartStore = defineStore("cart", {
 
     addOrRemoveFavorite(pro: Product) {
       const findedIndex = this.favorites.findIndex(
-        (fav: any) => fav.id === pro.productId
+        (fav: any) => fav.id === pro.id
       );
       if (findedIndex === -1) {
         this.favorites = [...this.favorites, pro];
       } else {
-        this.favorites = this.favorites.filter(
-          (fav: any) => fav.id !== pro.productId
-        );
+        this.favorites = this.favorites.filter((fav: any) => fav.id !== pro.id);
       }
       localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },

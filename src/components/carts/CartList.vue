@@ -29,7 +29,7 @@
                 @click="addProduct(item)"
               >
               </v-btn>
-              <v-card-title> {{ item.quantity }} </v-card-title>
+              <v-card-title> {{ item.quantity + 1 }} </v-card-title>
               <v-btn
                 variant="outlined"
                 size="small"
@@ -67,6 +67,7 @@ export default defineComponent({
 
     addProduct(product: any) {
       this.setAddBasket(product);
+      this.product.quantity++;
       console.log("ekledi", this.getBasketGetters);
     },
     deleteProduct() {

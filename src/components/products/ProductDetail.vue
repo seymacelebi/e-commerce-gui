@@ -54,7 +54,11 @@
             <div class="px-4"></div>
 
             <v-card-actions>
-              <v-btn variant="tonal" color="success">
+              <v-btn
+                variant="tonal"
+                color="success"
+                @click="addProduct(product)"
+              >
                 <v-icon> mdi-shopping </v-icon> Sepete Ekle
               </v-btn>
             </v-card-actions>
@@ -82,6 +86,7 @@ import axios from "axios";
 import { defineComponent, inject } from "vue";
 import AppHeader from "../AppHeader.vue";
 import { Product } from "../../models/entities/ProductDto";
+import { useCartStore } from "../../store/cartStore";
 export default defineComponent({
   name: "ProductDetail",
   data() {
@@ -97,6 +102,7 @@ export default defineComponent({
     // this.getProductById();
   },
   computed: {
+    ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
     getProductById(): Object {
@@ -106,6 +112,11 @@ export default defineComponent({
     },
   },
   methods: {
+    ...mapActions(useCartStore, ["setAddBasket"]),
+    addProduct(product: any) {
+      this.setAddBasket(product);
+      console.log("ekledi", this.getBasketGetters);
+    },
     // getProductListById() {
     //   const id = +this.$route.params.id;
     //   axios

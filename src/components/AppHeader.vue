@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark prominent>
-      <v-btn  icon color="black">
+      <v-btn icon color="black">
         <v-icon>mdi-weather-sunny</v-icon>
       </v-btn>
       <v-toolbar-title
@@ -12,6 +12,22 @@
         "
         >ECommerce</v-toolbar-title
       >
+      <v-menu open-on-hover>
+        <template v-slot:activator="{ props }">
+          <span variant="plain" v-bind="props"> ÜRÜNLERİMİZ </span>
+        </template>
+        <v-list>
+          <v-list-item
+            :active="false"
+            v-for="(categori, index) in filterItem"
+            to="/product"
+            :key="index"
+            @click="filterClouds(categori.name)"
+          >
+            <v-list-item-title>{{ categori.name }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
       <v-spacer></v-spacer>
 
@@ -44,11 +60,25 @@
   </div>
 </template>
 <script lang="ts">
+import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import ProductList from "../components/products/ProductList.vue";
+import { useProductStore } from "../store/productStore";
+import { useCartStore } from "../store/cartStore";
 export default defineComponent({
   name: "AppHeader",
   data: () => ({}),
   components: { ProductList },
+  computed: {
+    ...mapState(useCartStore, ["getBasketGetters", "getProductGetters"]),
+  },
+  methods: {
+    ...mapActions(useCartStore, ["setfilter"]),
+    filterClouds(catName: any) {
+      this.$router.push({ name: "ProductList", path: "/product" });
+      console.log("click =>", catName);
+      this.setfilter(catName);
+    },
+  },
 });
 </script>
