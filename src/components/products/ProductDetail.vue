@@ -2,7 +2,7 @@
   <v-app>
     <AppHeader />
     <v-container fluid>
-      <v-row v-for="(product, index) in getProductGetters" :key="index">
+      <v-row v-for="(product, index) in dataId" :key="index">
         <v-col cols="6">
           <v-card class="ml-15 mt-10 rounded-xl" max-width="500" flat outlined>
             <div align="center" justify="center">
@@ -81,19 +81,29 @@ import { mapState, mapActions } from "pinia";
 import axios from "axios";
 import { defineComponent, inject } from "vue";
 import AppHeader from "../AppHeader.vue";
+import { Product } from "../../models/entities/ProductDto";
 export default defineComponent({
   name: "ProductDetail",
-  data: () => ({
-    product: [] as any,
-  }),
+  data() {
+    return {
+      product: [] as any,
+      dataId: {},
+      products: inject<Product>("products"),
+    };
+  },
+
   components: { AppHeader },
   mounted() {
     // this.getProductById();
-    console.log(this.$route.params.id, "1212");
   },
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
+    getProductById(): Object {
+      return (this.dataId = this.getProductGetters.filter(
+        (x: any) => x.id === Number(this.$route.params.id)
+      ));
+    },
   },
   methods: {
     // getProductListById() {
@@ -113,6 +123,19 @@ export default defineComponent({
     //   this.product = data;
     //   console.log(this.product, "product");
     // },
+    getProductById() {
+      this.dataId = this.getProductGetters.filter(
+        (x: any) => x.id === Number(this.$route.params.id)
+      );
+    },
+  },
+  watch: {
+    getProductById: {
+      handler() {
+        this.getProductById;
+        console.log("DETAY", this.getProductById);
+      },
+    },
   },
 });
 </script>

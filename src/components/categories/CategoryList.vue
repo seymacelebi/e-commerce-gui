@@ -14,11 +14,16 @@
   </v-row>
 </template>
 <script lang="ts">
+import { useProductStore } from "../../store/productStore";
+import { mapState, mapActions } from "pinia";
 import axios from "axios";
 export default {
   data: () => ({
     categories: [] as any,
   }),
+  computed: {
+    ...mapActions(useProductStore, ["getAllProduct"]),
+  },
   methods: {
     // getCategoryList() {
     //   try {
@@ -35,6 +40,7 @@ export default {
     },
   },
   mounted() {
+    this.getAllProduct;
     this.getCategoryList();
   },
 };

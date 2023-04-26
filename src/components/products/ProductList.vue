@@ -27,7 +27,7 @@
             class="mx-2 mt-n3"
             @click="
               $router.push({
-                name: 'ProductDetail',
+                name: 'Detail',
                 params: { id: product.id },
               })
             "
