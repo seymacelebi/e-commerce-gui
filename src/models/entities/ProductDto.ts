@@ -1,3 +1,5 @@
+import { Category } from "./CategoryDto";
+
 export class Product {
   constructor() {
     this.id = 0;
@@ -7,6 +9,10 @@ export class Product {
     this.images = "";
     this.quantity = 1;
     this.categoryId = 0;
+    this.category = {
+      id:0,
+      name:"",
+  };
   }
   id: number;
   title: string;
@@ -15,4 +21,5 @@ export class Product {
   images: string;
   quantity: number;
   categoryId: number;
+  category: Category;
 }
