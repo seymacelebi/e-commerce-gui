@@ -12,22 +12,6 @@
         "
         >ECommerce</v-toolbar-title
       >
-      <v-menu open-on-hover>
-        <template v-slot:activator="{ props }">
-          <span variant="plain" v-bind="props"> ÜRÜNLERİMİZ </span>
-        </template>
-        <v-list>
-          <v-list-item
-            :active="false"
-            v-for="(categori, index) in filterItem"
-            to="/product"
-            :key="index"
-            @click="filterClouds(categori.name)"
-          >
-            <v-list-item-title>{{ categori.name }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
 
       <v-spacer></v-spacer>
 
@@ -67,7 +51,15 @@ import { useProductStore } from "../store/productStore";
 import { useCartStore } from "../store/cartStore";
 export default defineComponent({
   name: "AppHeader",
-  data: () => ({}),
+  data: () => ({
+    filterItem: [
+      { name: "Clothess", icon: "mdi-map" },
+      { name: "Electronics", icon: "mdi-map" },
+      { name: "Others", icon: "mdi-tablet" },
+      { name: "Shoes", icon: "mdi-table-furniture" },
+      { name: "Change title", icon: "mdi-tshirt-crew-outline" },
+    ],
+  }),
   components: { ProductList },
   computed: {
     ...mapState(useCartStore, ["getBasketGetters", "getProductGetters"]),
@@ -79,6 +71,10 @@ export default defineComponent({
       console.log("click =>", catName);
       this.setfilter(catName);
     },
+  },
+  mounted() {
+    this.filterClouds;
+    console.log(this.filterClouds, "1212");
   },
 });
 </script>

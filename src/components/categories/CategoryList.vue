@@ -5,6 +5,8 @@
         <v-img
           :src="category.image"
           height="150px"
+          to="/product"
+          @click="filterClouds(category.name)"
           cove
         ></v-img>
         <v-card-text> {{ category.name }} </v-card-text>
@@ -17,70 +19,49 @@ import { useProductStore } from "../../store/productStore";
 import { mapState, mapActions } from "pinia";
 import axios from "axios";
 import { useCartStore } from "../../store/cartStore";
-import { Product } from '../../models/entities/ProductDto';
-import { Category } from '../../models/entities/CategoryDto';
+import { Product } from "../../models/entities/ProductDto";
+import { Category } from "../../models/entities/CategoryDto";
 export default {
   data: () => ({
     categories: [] as any,
-    uniqueCategories: new Array<Product>
+    uniqueCategories: new Array<Product>(),
   }),
   computed: {
     ...mapState(useCartStore, ["getFilterCategory"]),
     ...mapState(useProductStore, ["getProductGetters"]),
 
-  //     categories(): Product[] {   
-  //   this.getProductGetters.forEach((product:any) => {
-  //     if (!this.uniqueCategories.some((c: Category) => c.name === product.category.name )) {
-  //       this.uniqueCategories.push(product.category);
-  //     }
-  //   });
-  //   return this.uniqueCategories;
-  // },
-   filteredProducts(): Product[] {
+    //     categories(): Product[] {
+    //   this.getProductGetters.forEach((product:any) => {
+    //     if (!this.uniqueCategories.some((c: Category) => c.name === product.category.name )) {
+    //       this.uniqueCategories.push(product.category);
+    //     }
+    //   });
+    //   return this.uniqueCategories;
+    // },
+    filteredProducts(): Product[] {
       return this.getProductGetters.filter((product: Product) => {
-        return product.category.id 
+        return product.category.id;
       });
     },
-    filteredCategories(): Category[]{
+    filteredCategories(): Category[] {
       const categories: Category[] = [];
-      this.filteredProducts.forEach((product:Product)=>{
-           if (!categories.some((c: Category) => c.name === product.category.name)) {
+      this.filteredProducts.forEach((product: Product) => {
+        if (
+          !categories.some((c: Category) => c.name === product.category.name)
+        ) {
           categories.push(product.category);
         }
       });
-            return categories;
-    }
+      return categories;
+    },
   },
-  //  computed: {
-  //   ...mapState(useCartStore, ["getFilterCategory"]),
-  //   ...mapState(useProductStore, ["getProductGetters"]),
-  //     categories(): Product[] {
-    
-  //   this.getProductGetters.forEach((product:Product) => {
-  //       if (!this.uniqueCategories.some((c: Category) => c.name === product.category.name)) {
-  //         this.categories.push(product.category);
-  //       }
-  //   });
-  //   return this.uniqueCategories;  
-  // },
-
-  //  filteredProducts(): Product[] {
-  //     return this.getProductGetters.filter((product: Product) => {
-  //       return product.category.name !== 'Kategori 1'; // Filter condition
-  //     });
-  //   },
-  //   filteredCategories(): Category[]{
-  //     const categories: Category[] = [];
-  //     this.filteredProducts.forEach((product:Product)=>{
-  //          if (!categories.some((c: Category) => c.name === product.category.name)) {
-  //         categories.push(product.category);
-  //       }
-  //     });
-  //           return categories;
-  //   }
-  // },
   methods: {
-  
+    ...mapActions(useCartStore, ["setfilter"]),
+    filterClouds(catName: any) {
+      this.$router.push({ name: "ProductList", path: "/product" });
+      console.log("click =>", catName);
+      this.setfilter(catName);
+    },
   },
   mounted() {
     this.getProductGetters;

@@ -27,7 +27,6 @@ export const useCartStore = defineStore("cart", {
   //actions da içerisine api verileri atanan product ı getters da bir func atadım.computed da cagırdım.
   getters: {
     getProductGetters: (state) => {
-      console.log(state.product, "getters");
       return state.product;
     },
     getBasketGetters: (state) => {
@@ -41,6 +40,7 @@ export const useCartStore = defineStore("cart", {
       return state.basketLength;
     },
     getFilterCategory: (state) => {
+      console.log(state.filterCategory, "filtered1213");
       return state.filterCategory;
     },
     getFavoritesState(state) {
@@ -52,12 +52,10 @@ export const useCartStore = defineStore("cart", {
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.categoryId == catId
       );
-      console.log("actions girdi");
+      console.log(this.filterCategory, "filterCategory12121");
     },
     setAddBasket(pro: Product) {
       this.basket = [...this.basket, pro];
-      console.log(this.basket, "basketaction");
-      console.log(this.product, "aaa");
     },
     setDeleteBasket(pro: Product) {
       this.basket.pop(pro);

@@ -24,7 +24,6 @@ export const useProductStore = defineStore("product", {
 
   getters: {
     getProductGetters: (state) => {
-      console.log(state.product, "getters");
       return state.product;
     },
     getBasketGetters: (state) => {

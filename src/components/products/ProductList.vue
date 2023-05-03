@@ -17,9 +17,7 @@
 
         <v-card-actions>
           <v-btn rounded="lg" class="mt-n2 add"> {{ product.price }} $ </v-btn>
-          <!-- <v-btn variant="outlined" size="small"> - </v-btn>
-          <v-card-title> 0 </v-card-title>
-          <v-btn variant="outlined" size="small"> + </v-btn> -->
+
           <v-spacer></v-spacer>
 
           <v-btn
@@ -56,6 +54,7 @@ export default {
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
+    ...mapState(useCartStore, ["getFilterCategory"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
@@ -69,7 +68,7 @@ export default {
   mounted() {
     this.getAllProduct;
     this.getBasketGetters;
-    console.log(this.getBasketGetters, "mounted");
+    this.getFilterCategory;
   },
 };
 </script>
