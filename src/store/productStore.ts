@@ -17,8 +17,9 @@ export const useProductStore = defineStore("product", {
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-
       loading: false,
+      filterCategory: [] as Array<Product>,
+      categoryFiltered: [] as any,
     };
   },
 
@@ -29,9 +30,16 @@ export const useProductStore = defineStore("product", {
     getBasketGetters: (state) => {
       return state.basket;
     },
-
+    getFilterCategory: (state) => {
+      console.log(state.filterCategory, "filtered1213");
+      return state.filterCategory;
+    },
     getBasketLength: (state) => {
       return state.basketLength;
+    },
+    getProductFilteredCategory: (state) => {
+      console.log("categoryFiltered", state.categoryFiltered);
+      return state.categoryFiltered;
     },
   },
   actions: {
@@ -46,6 +54,17 @@ export const useProductStore = defineStore("product", {
     //       });
     //     });
     // },
+    productWithFilteredCategories() {
+      this.categoryFiltered = Array.from(
+        new Set(this.getProductGetters.map((p) => p.category))
+      );
+    },
+    setfilter(catId: number) {
+      this.filterCategory = this.getProductGetters.filter(
+        (x) => x.categoryId == catId
+      );
+      console.log(this.filterCategory, "filtrelenmişcategorystore");
+    },
     async getAllProduct() {
       // const response = await fetch('https://fakestoreapi.com/products')
       const response = await fetch(

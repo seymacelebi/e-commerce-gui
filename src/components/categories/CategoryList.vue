@@ -5,7 +5,7 @@
         <v-img
           :src="category.image"
           height="150px"
-          to="/product"
+          to="/productlist"
           @click="filterClouds(category.name)"
           cove
         ></v-img>
@@ -25,6 +25,8 @@ export default {
   data: () => ({
     categories: [] as any,
     uniqueCategories: new Array<Product>(),
+    selectedCategoryId: null,
+    selectedCategory: "",
   }),
   computed: {
     ...mapState(useCartStore, ["getFilterCategory"]),
@@ -39,10 +41,19 @@ export default {
     //   return this.uniqueCategories;
     // },
     filteredProducts(): Product[] {
-      return this.getProductGetters.filter((product: Product) => {
-        return product.category.id;
-      });
+      if (this.selectedCategoryId === null) {
+        return this.getProductGetters;
+      } else {
+        return this.getProductGetters.filter((product: Product) => {
+          return product.category.id === this.selectedCategoryId;
+        });
+      }
     },
+    // filteredProducts(): Product[] {
+    //   return this.getProductGetters.filter((product: Product) => {
+    //     return product.category.id;
+    //   });
+    // },
     filteredCategories(): Category[] {
       const categories: Category[] = [];
       this.filteredProducts.forEach((product: Product) => {
@@ -56,17 +67,30 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useCartStore, ["setfilter"]),
+    selectCategory(category: any) {
+      this.selectedCategoryId = category.id;
+    },
+    ...mapActions(useProductStore, ["setfilter"]),
     filterClouds(catName: any) {
-      this.$router.push({ name: "ProductList", path: "/product" });
+      this.$router.push({ name: "ProductList", path: "/productlist" });
       console.log("click =>", catName);
       this.setfilter(catName);
+    },
+    filteredProducts() {
+      if (this.selectedCategory === "") {
+        return this.getProductGetters;
+      } else {
+        return this.getProductGetters.filter(
+          (p: any) => p.category === this.selectedCategory
+        );
+      }
     },
   },
   mounted() {
     this.getProductGetters;
     this.getFilterCategory;
     console.log("filter", this.getFilterCategory);
+    console.log("bune", this.filteredProducts);
   },
 };
 </script>

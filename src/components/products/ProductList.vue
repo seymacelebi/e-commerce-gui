@@ -1,6 +1,8 @@
 <template>
   <v-row justify="center" class="space px-16">
+    <v-col v-if="getProductFilteredCategory.length > 0"> </v-col>
     <v-col
+      v-else
       cols="12"
       xs="12"
       sm="6"
@@ -44,10 +46,11 @@
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
+import { Product } from "../../models/entities/ProductDto";
 export default {
   data: () => ({
     products: [] as any,
-
+    selectedCategory: null,
     rating: 3,
   }),
 
@@ -55,20 +58,34 @@ export default {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useCartStore, ["getFilterCategory"]),
+
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket"]),
+    ...mapState(useProductStore, ["getProductFilteredCategory"]),
     addProduct(product: any) {
       this.setAddBasket(product);
       console.log("ekledi", this.getBasketGetters);
+    },
+    filteredProducts: function () {
+      return this.getProductGetters.filter((product: Product) => {
+        return product.category.name === this.selectedCategory;
+      });
     },
   },
 
   mounted() {
     this.getAllProduct;
+    this.getProductFilteredCategory;
     this.getBasketGetters;
     this.getFilterCategory;
+    this.filteredProducts;
+  },
+  watch: {
+    selectedCategory(val) {
+      console.log("val", val);
+    },
   },
 };
 </script>
