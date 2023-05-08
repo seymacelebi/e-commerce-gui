@@ -70,6 +70,7 @@ export default defineComponent({
       this.product.quantity++;
       console.log("ekledi", this.getBasketGetters);
     },
+
     deleteProduct() {
       this.setDeleteBasket(this.pro);
       console.log("deneme");

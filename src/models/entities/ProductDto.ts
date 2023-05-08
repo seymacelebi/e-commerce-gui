@@ -7,12 +7,12 @@ export class Product {
     this.description = "";
     this.price = 0;
     this.images = "";
-    this.quantity = 1;
+    this.quantity = 0;
     this.categoryId = 0;
     this.category = {
-      id:0,
-      name:"",
-  };
+      id: 0,
+      name: "",
+    };
   }
   id: number;
   title: string;

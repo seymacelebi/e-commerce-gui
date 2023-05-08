@@ -20,6 +20,7 @@ export const useCartStore = defineStore("cart", {
       basketLength: 0,
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
+      totalItems: 0,
     };
   },
 
@@ -43,9 +44,24 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    setAddBasket(pro: Product) {
-      this.basket = [...this.basket, pro];
+    setAddBasket(product: Product) {
+      const existingItem = this.basket.find((i: any) => i.id === product.id);
+      if (existingItem) {
+        existingItem.quantity++;
+        console.log(existingItem, "existingItem");
+      } else {
+        this.basket.push({ ...product, quantity: 1 });
+      }
+      this.totalItems++;
     },
+    // setDeleteBasket(product: Product) {
+    //   const existingItem = this.basket.find((i: any) => i.id === product.id);
+    //   if (existingItem) {
+    //     existingItem.quantity--;
+    //   } else {
+    //     this.basket.pop(product);
+    //   }
+    // },
     setDeleteBasket(pro: Product) {
       this.basket.pop(pro);
       pro.quantity--;

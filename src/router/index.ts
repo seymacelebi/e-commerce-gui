@@ -7,11 +7,7 @@ const routes = [
     name: "HomeView",
     component: HomeView,
   },
-  {
-    path: "/topClothes",
-    name: "TopClothesList",
-    component: TopClothesList,
-  },
+
   {
     path: "/productList",
     name: "ProductList",

@@ -88,7 +88,6 @@ const toast = useToast();
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
-import { Product } from "../../models/entities/ProductDto";
 export default {
   data: () => ({
     products: [] as any,
@@ -109,11 +108,6 @@ export default {
       toast.success("Sepete Eklendi");
       console.log("ekledi", this.getBasketGetters);
     },
-    // filteredProducts: function () {
-    //   return this.getProductGetters.filter((product: Product) => {
-    //     return product.category.name === this.selectedCategory;
-    //   });
-    // },
   },
 
   mounted() {
@@ -121,7 +115,6 @@ export default {
     this.getProductFilteredCategory;
     this.getBasketGetters;
     this.getFilterCategory;
-    // this.filteredProducts;
   },
   watch: {},
 };
