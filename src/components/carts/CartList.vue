@@ -34,7 +34,7 @@
                 variant="outlined"
                 size="small"
                 icon="mdi-minus"
-                @click.prevent="deleteProduct()"
+                @click.prevent="removeProduct(item)"
               >
               </v-btn>
             </v-card-actions>
@@ -43,7 +43,13 @@
       </v-card>
       <v-divider></v-divider>
       <div class="d-flex flex-row-reverse mb-6">
-        <v-btn variant="outlined" class="ma-2 pa-2"> SATIN AL </v-btn>
+        <v-btn
+          variant="outlined"
+          class="ma-2 pa-2"
+          v-if="getBasketGetters.length > 0"
+        >
+          SATIN AL
+        </v-btn>
       </div>
     </v-col>
   </v-row>
@@ -71,10 +77,13 @@ export default defineComponent({
       console.log("ekledi", this.getBasketGetters);
     },
 
-    deleteProduct() {
-      this.setDeleteBasket(this.pro);
-      console.log("deneme");
-      console.log("silindi", this.pro);
+    // deleteProduct() {
+    //   this.setDeleteBasket(this.pro);
+    //   console.log("deneme");
+    //   console.log("silindi", this.pro);
+    // },
+    removeProduct(productId: number) {
+      this.setDeleteBasket(productId);
     },
   },
   components: { AppHeader },

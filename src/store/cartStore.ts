@@ -54,18 +54,26 @@ export const useCartStore = defineStore("cart", {
       }
       this.totalItems++;
     },
-    // setDeleteBasket(product: Product) {
-    //   const existingItem = this.basket.find((i: any) => i.id === product.id);
-    //   if (existingItem) {
-    //     existingItem.quantity--;
-    //   } else {
-    //     this.basket.pop(product);
-    //   }
-    // },
-    setDeleteBasket(pro: Product) {
-      this.basket.pop(pro);
-      pro.quantity--;
+    removeProduct(product: string) {
+      const index = this.basket.indexOf(product);
+      if (index !== -1) {
+        this.basket.splice(index, 1);
+      }
     },
+    setDeleteBasket(product: Product) {
+      const existingItem = this.basket.find((i: any) => i.id === product.id);
+      if (existingItem?.quantity !== 0) {
+        console.log("23", existingItem);
+        existingItem.quantity--;
+      } else {
+        console.log(this.product, "product");
+        this.basket.pop();
+      }
+    },
+    // setDeleteBasket(pro: Product) {
+    //   this.basket.pop(pro);
+    //   pro.quantity--;
+    // },
 
     addOrRemoveFavorite(pro: Product) {
       const findedIndex = this.favorites.findIndex(
