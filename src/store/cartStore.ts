@@ -18,7 +18,6 @@ export const useCartStore = defineStore("cart", {
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-      filterCategory: [] as Array<Product>,
       favorites: loadFromStorage("userFavorites", [] as Array<Product>),
       loading: false,
     };
@@ -30,7 +29,6 @@ export const useCartStore = defineStore("cart", {
       return state.product;
     },
     getBasketGetters: (state) => {
-      console.log("oldu", state.basket);
       return state.basket;
     },
     GetBasketPrice: (state) => {
@@ -39,21 +37,12 @@ export const useCartStore = defineStore("cart", {
     getBasketLength: (state) => {
       return state.basketLength;
     },
-    getFilterCategory: (state) => {
-      console.log(state.filterCategory, "filtered1213");
-      return state.filterCategory;
-    },
+
     getFavoritesState(state) {
       return state.favorites;
     },
   },
   actions: {
-    setfilter(catId: number) {
-      this.filterCategory = this.getProductGetters.filter(
-        (x) => x.categoryId == catId
-      );
-      console.log(this.filterCategory, "filterCategory12121");
-    },
     setAddBasket(pro: Product) {
       this.basket = [...this.basket, pro];
     },

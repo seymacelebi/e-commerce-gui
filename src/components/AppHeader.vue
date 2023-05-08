@@ -64,17 +64,7 @@ export default defineComponent({
   computed: {
     ...mapState(useCartStore, ["getBasketGetters", "getProductGetters"]),
   },
-  methods: {
-    ...mapActions(useCartStore, ["setfilter"]),
-    filterClouds(catName: any) {
-      this.$router.push({ name: "ProductList", path: "/product" });
-      console.log("click =>", catName);
-      this.setfilter(catName);
-    },
-  },
-  mounted() {
-    this.filterClouds;
-    console.log(this.filterClouds, "1212");
-  },
+  methods: {},
+  mounted() {},
 });
 </script>

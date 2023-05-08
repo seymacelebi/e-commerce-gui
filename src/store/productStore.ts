@@ -31,7 +31,7 @@ export const useProductStore = defineStore("product", {
       return state.basket;
     },
     getFilterCategory: (state) => {
-      console.log(state.filterCategory, "filtered1213");
+      console.log(state.filterCategory, "filterenmişcategory");
       return state.filterCategory;
     },
     getBasketLength: (state) => {
@@ -59,16 +59,15 @@ export const useProductStore = defineStore("product", {
         new Set(this.getProductGetters.map((p) => p.category))
       );
     },
-    setfilter(catId: number) {
+    setfilter(catName: string) {
       this.filterCategory = this.getProductGetters.filter(
-        (x) => x.categoryId == catId
+        (x) => x.category.name == catName
       );
-      console.log(this.filterCategory, "filtrelenmişcategorystore");
     },
     async getAllProduct() {
       // const response = await fetch('https://fakestoreapi.com/products')
       const response = await fetch(
-        "https://api.escuelajs.co/api/v1/products?offset=0&limit=70"
+        "https://api.escuelajs.co/api/v1/products?offset=0&limit=51"
       );
 
       const data = await response.json();

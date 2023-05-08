@@ -24,7 +24,7 @@ import { Category } from "../../models/entities/CategoryDto";
 export default {
   data: () => ({
     categories: [] as any,
-    uniqueCategories: new Array<Product>(),
+
     selectedCategoryId: null,
     selectedCategory: "",
   }),
@@ -32,14 +32,6 @@ export default {
     ...mapState(useCartStore, ["getFilterCategory"]),
     ...mapState(useProductStore, ["getProductGetters"]),
 
-    //     categories(): Product[] {
-    //   this.getProductGetters.forEach((product:any) => {
-    //     if (!this.uniqueCategories.some((c: Category) => c.name === product.category.name )) {
-    //       this.uniqueCategories.push(product.category);
-    //     }
-    //   });
-    //   return this.uniqueCategories;
-    // },
     filteredProducts(): Product[] {
       if (this.selectedCategoryId === null) {
         return this.getProductGetters;
@@ -49,11 +41,7 @@ export default {
         });
       }
     },
-    // filteredProducts(): Product[] {
-    //   return this.getProductGetters.filter((product: Product) => {
-    //     return product.category.id;
-    //   });
-    // },
+
     filteredCategories(): Category[] {
       const categories: Category[] = [];
       this.filteredProducts.forEach((product: Product) => {
@@ -67,9 +55,6 @@ export default {
     },
   },
   methods: {
-    selectCategory(category: any) {
-      this.selectedCategoryId = category.id;
-    },
     ...mapActions(useProductStore, ["setfilter"]),
     filterClouds(catName: any) {
       this.$router.push({ name: "ProductList", path: "/productlist" });
@@ -89,8 +74,6 @@ export default {
   mounted() {
     this.getProductGetters;
     this.getFilterCategory;
-    console.log("filter", this.getFilterCategory);
-    console.log("bune", this.filteredProducts);
   },
 };
 </script>
