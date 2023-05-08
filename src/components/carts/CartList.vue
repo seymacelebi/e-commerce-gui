@@ -42,6 +42,9 @@
         </div>
       </v-card>
       <v-divider></v-divider>
+      <h3 class="d-flex flex-row-reverse mb-6">
+        Sepet Tutarı: {{ totalPrice }}
+      </h3>
       <div class="d-flex flex-row-reverse mb-6">
         <v-btn
           variant="outlined"
@@ -67,6 +70,8 @@ export default defineComponent({
   }),
   computed: {
     ...mapState(useCartStore, ["getBasketGetters"]),
+    ...mapState(useCartStore, ["GetBasketPrice"]),
+    ...mapState(useCartStore, ["totalPrice"]),
   },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket", "setDeleteBasket"]),
@@ -77,11 +82,6 @@ export default defineComponent({
       console.log("ekledi", this.getBasketGetters);
     },
 
-    // deleteProduct() {
-    //   this.setDeleteBasket(this.pro);
-    //   console.log("deneme");
-    //   console.log("silindi", this.pro);
-    // },
     removeProduct(productId: number) {
       this.setDeleteBasket(productId);
     },

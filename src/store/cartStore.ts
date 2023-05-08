@@ -38,6 +38,12 @@ export const useCartStore = defineStore("cart", {
     getBasketLength: (state) => {
       return state.basketLength;
     },
+    totalPrice(): number {
+      return this.basket.reduce(
+        (totalPrice, item) => totalPrice + item.price * item.quantity,
+        0
+      );
+    },
 
     getFavoritesState(state) {
       return state.favorites;
@@ -54,12 +60,7 @@ export const useCartStore = defineStore("cart", {
       }
       this.totalItems++;
     },
-    removeProduct(product: string) {
-      const index = this.basket.indexOf(product);
-      if (index !== -1) {
-        this.basket.splice(index, 1);
-      }
-    },
+
     setDeleteBasket(product: Product) {
       const existingItem = this.basket.find((i: any) => i.id === product.id);
       if (existingItem?.quantity !== 0) {
@@ -70,10 +71,6 @@ export const useCartStore = defineStore("cart", {
         this.basket.pop();
       }
     },
-    // setDeleteBasket(pro: Product) {
-    //   this.basket.pop(pro);
-    //   pro.quantity--;
-    // },
 
     addOrRemoveFavorite(pro: Product) {
       const findedIndex = this.favorites.findIndex(
