@@ -83,6 +83,8 @@
   </v-row>
 </template>
 <script lang="ts">
+import { useToast } from "vue-toastification";
+const toast = useToast();
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
@@ -104,6 +106,7 @@ export default {
     ...mapState(useProductStore, ["getProductFilteredCategory"]),
     addProduct(product: any) {
       this.setAddBasket(product);
+      toast.success("Sepete Eklendi");
       console.log("ekledi", this.getBasketGetters);
     },
     // filteredProducts: function () {
