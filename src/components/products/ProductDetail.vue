@@ -3,11 +3,18 @@
     <AppHeader />
     <v-container fluid>
       <v-row v-for="(product, index) in dataId" :key="index">
-        <v-col cols="6">
-          <v-card class="ml-15 mt-10 rounded-xl" max-width="500" flat outlined>
-            <div align="center" justify="center">
+        <v-col>
+          <v-card>
+            <v-carousel>
+              <v-carousel-item v-for="(item, i) in product.images" :key="i">
+                <v-card>
+                  <v-img :src="item"></v-img>
+                </v-card>
+              </v-carousel-item>
+            </v-carousel>
+            <!-- <div align="center" justify="center">
               <v-img max-width="800" contain :src="product.images[0]"></v-img>
-            </div>
+            </div> -->
 
             <!-- <v-card-title primary-title class="mx-auto">{{
               product.title
@@ -15,8 +22,8 @@
             <v-card-actions> </v-card-actions>
           </v-card>
         </v-col>
-        <v-col cols="6">
-          <v-card class="my-12 mr-15" max-width="600">
+        <v-col>
+          <v-card>
             <template v-slot:loader="{ isActive }">
               <v-progress-linear
                 :active="isActive"
@@ -36,9 +43,7 @@
 
             <v-card-text>
               <div>
-                <p class="text-h6 text--primary">
-                  {{ product.price }}
-                </p>
+                <p class="text-h6 text--primary">{{ product.price }} $</p>
               </div>
             </v-card-text>
             <v-card-text>
@@ -63,26 +68,16 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-          <!-- <v-card max-width="600">
-            <v-card-item>
-              <div>
-                <v-card-text class="pb-0">
-                  <p>
-                    {{ product.description }}
-                  </p>
-                </v-card-text>
-              </div>
-            </v-card-item>
-          </v-card> -->
         </v-col>
       </v-row>
     </v-container>
   </v-app>
 </template>
 <script lang="ts">
+import { useToast } from "vue-toastification";
+const toast = useToast();
 import { useProductStore } from "../../store/productStore";
 import { mapState, mapActions } from "pinia";
-import axios from "axios";
 import { defineComponent, inject } from "vue";
 import AppHeader from "../AppHeader.vue";
 import { Product } from "../../models/entities/ProductDto";
@@ -94,6 +89,20 @@ export default defineComponent({
       product: [] as any,
       dataId: {},
       products: inject<Product>("products"),
+      items: [
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+        },
+        {
+          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+        },
+      ],
     };
   },
 
@@ -115,6 +124,7 @@ export default defineComponent({
     ...mapActions(useCartStore, ["setAddBasket"]),
     addProduct(product: any) {
       this.setAddBasket(product);
+      toast.success("Sepete Eklendi");
       console.log("ekledi", this.getBasketGetters);
     },
     // getProductListById() {

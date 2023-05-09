@@ -42,18 +42,22 @@
         </div>
       </v-card>
       <v-divider></v-divider>
-      <h3 class="d-flex flex-row-reverse mb-6">
-        Sepet Tutarı: {{ totalPrice }}
-      </h3>
-      <div class="d-flex flex-row-reverse mb-6">
-        <v-btn
-          variant="outlined"
-          class="ma-2 pa-2"
-          v-if="getBasketGetters.length > 0"
-        >
-          SATIN AL
-        </v-btn>
-      </div>
+      <v-row>
+        <v-col>
+          <h3 class="d-flex flex-row-reverse mb-6 mt-4">
+            Sepet Tutarı: {{ totalPrice }}
+          </h3>
+          <div class="d-flex flex-row-reverse mb-3">
+            <v-btn
+              variant="outlined"
+              class="ma-2 pa-2"
+              v-if="getBasketGetters.length > 0"
+            >
+              SATIN AL
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
