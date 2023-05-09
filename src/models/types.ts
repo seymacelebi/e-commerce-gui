@@ -3,3 +3,8 @@ export interface BasketObjectType {
   description: string;
   price: string;
 }
+
+export interface FavoriteObjectType {
+  name: string;
+  icon: string;
+}

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Product } from "../models/entities/ProductDto";
+import { FavoriteObjectType } from "../models/types";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -18,7 +19,11 @@ export const useCartStore = defineStore("cart", {
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-      favorites: loadFromStorage("userFavorites", [] as Array<Product>),
+      favorites: loadFromStorage(
+        "userFavorites",
+        [] as FavoriteObjectType[]
+      ) as FavoriteObjectType[],
+
       loading: false,
       totalItems: 0,
     };
@@ -72,17 +77,20 @@ export const useCartStore = defineStore("cart", {
       }
     },
 
-    addOrRemoveFavorite(pro: Product) {
+    addOrRemoveFavorite(newFav: FavoriteObjectType) {
       const findedIndex = this.favorites.findIndex(
-        (fav: any) => fav.id === pro.id
+        (fav) => fav.name === newFav.name
       );
-      if (findedIndex === -1) {
-        this.favorites = [...this.favorites, pro];
+      if (findedIndex == -1) {
+        this.favorites.push(newFav);
       } else {
-        this.favorites = this.favorites.filter((fav: any) => fav.id !== pro.id);
+        this.favorites = this.favorites.filter(
+          (fav) => fav.name !== newFav.name
+        );
       }
       localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },
+
     setLoadingState(state: boolean) {
       this.loading = state;
     },

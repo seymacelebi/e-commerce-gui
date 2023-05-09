@@ -8,12 +8,12 @@
             <v-toolbar-title class="text-h6">Category</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn-toggle v-model="toggle_exclusive" group color="#49D9A0">
-              <v-btn>
+              <!-- <v-btn>
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
               <v-btn>
                 <v-icon>mdi-chevron-right</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-btn-toggle>
           </v-toolbar>
           <CategoryList />
@@ -22,13 +22,7 @@
             <v-spacer></v-spacer>
           </v-toolbar>
           <ProductList />
-          <v-card flat color="#E2F2E5" class="rounded-xl mt-8">
-            <!-- <v-toolbar flat color="transparent" class="mb-4">
-              <v-toolbar-title class="text-h6 mt-5">Collection</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            <CollectionPage /> -->
-          </v-card>
+          <v-card flat color="#E2F2E5" class="rounded-xl mt-8"> </v-card>
         </v-col>
       </v-row>
     </v-container>

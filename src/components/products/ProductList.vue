@@ -58,13 +58,12 @@
         <v-card-subtitle>{{ product.description }} </v-card-subtitle>
 
         <v-card-actions>
-          <v-btn rounded="lg" class="mt-n2 add"> {{ product.price }} $ </v-btn>
+          <v-btn rounded="lg" class="add"> {{ product.price }} $ </v-btn>
 
           <v-spacer></v-spacer>
 
           <v-btn
             color="success"
-            class="mx-2 mt-n3"
             @click="
               $router.push({
                 name: 'Detail',
@@ -73,8 +72,16 @@
             "
             >Detaya Git</v-btn
           >
+          <v-btn color="red">
+            <v-icon
+              size="small"
+              color="white"
+              :icon="checkFavIcon(titleObjectItem)"
+            >
+            </v-icon>
+          </v-btn>
 
-          <v-btn class="mx-2 mt-n3" color="green" @click="addProduct(product)">
+          <v-btn color="green" @click="addProduct(product)">
             <v-icon> mdi-shopping </v-icon>
           </v-btn>
         </v-card-actions>
@@ -88,10 +95,14 @@ const toast = useToast();
 import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
-export default {
+import { defineComponent } from "vue";
+import { FavoriteObjectType } from "../../models/types";
+export default defineComponent({
+  name: "ProductList",
   data: () => ({
     products: [] as any,
     selectedCategory: null,
+    titleObjectItem: {} as any,
   }),
 
   computed: {
@@ -99,6 +110,7 @@ export default {
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useProductStore, ["getFilterCategory"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
+    ...mapState(useCartStore, ["getFavoritesState"]),
   },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket"]),
@@ -108,6 +120,22 @@ export default {
       toast.success("Sepete Eklendi");
       console.log("ekledi", this.getBasketGetters);
     },
+    addFavorite(child: FavoriteObjectType) {
+      this.addOrRemoveFavorite(child);
+      console.log();
+    },
+
+    checkFavIcon(child: FavoriteObjectType): string {
+      const findIndex = this.getFavoritesState.findIndex(
+        (fav) => fav.name === child.name
+      );
+      if (findIndex == -1) {
+        return "mdi-star-outline";
+      } else {
+        return "mdi-star";
+      }
+    },
+    ...mapActions(useCartStore, ["addOrRemoveFavorite"]),
   },
 
   mounted() {
@@ -117,7 +145,7 @@ export default {
     this.getFilterCategory;
   },
   watch: {},
-};
+});
 </script>
 
 <style></style>
