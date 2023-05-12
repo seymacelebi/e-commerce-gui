@@ -1,16 +1,9 @@
 <template>
   <AppHeader></AppHeader>
 
-  <v-row>
-    <v-col cols="6" class="mt-15">
-      <v-card
-        color="white"
-        theme="dark"
-        class="ml-15 mt-10"
-        v-for="(item, index) in getBasketGetters"
-        :key="index"
-        :value="index"
-      >
+  <v-row v-for="(item, index) in getBasketGetters" :key="index">
+    <v-col cols="8" class="mt-15">
+      <v-card color="white" theme="dark" class="ml-15 mt-10" :value="index">
         <div class="d-flex flex-no-wrap justify-space-between">
           <v-avatar class="ma-3" size="125" rounded="0">
             <v-img :src="item.images[0]"></v-img>
@@ -59,6 +52,32 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-col cols="4" class="mt-15">
+      <v-card class="mx-auto" max-width="344">
+        <v-card-item>
+          <div>
+            <div class="text-h4 mb-1">Checkout</div>
+
+            <div class="text-h6 mb-1">Sepet Tutarı: {{ totalPrice }}</div>
+          </div>
+        </v-card-item>
+
+        <v-card-actions>
+          <v-btn
+            justify="center"
+            align="center"
+            block
+            height="6vh"
+            color="info"
+            class="text-h6 text-white"
+            :size="buttonResponsive"
+            variant="flat"
+          >
+            Checkout
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 <script lang="ts">
@@ -76,6 +95,9 @@ export default defineComponent({
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useCartStore, ["GetBasketPrice"]),
     ...mapState(useCartStore, ["totalPrice"]),
+    buttonResponsive(): string {
+      return this.$vuetify.display.md ? "small" : "default";
+    },
   },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket", "setDeleteBasket"]),

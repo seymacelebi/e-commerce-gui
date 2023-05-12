@@ -72,14 +72,14 @@
             "
             >Detaya Git</v-btn
           >
-          <v-btn color="red">
+          <!-- <v-btn color="red">
             <v-icon
               size="small"
               color="white"
               :icon="checkFavIcon(titleObjectItem)"
             >
             </v-icon>
-          </v-btn>
+          </v-btn> -->
 
           <v-btn color="green" @click="addProduct(product)">
             <v-icon> mdi-shopping </v-icon>
