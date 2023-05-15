@@ -13,6 +13,44 @@ const routes = [
     name: "ProductList",
     component: () => import("../components/products/ProductList.vue"),
   },
+  {
+    path: "/userProfile",
+    name: "UserProfile",
+    component: () => import("../components/users/UserProfile.vue"),
+    redirect: { name: "information" },
+    children: [
+      {
+        path: "information",
+        name: "information",
+        component: () =>
+          import("../components/users/userProfile/UserInformation.vue"),
+      },
+      {
+        path: "order",
+        name: "order",
+        component: () =>
+          import("../components/users/userProfile/UserOrder.vue"),
+      },
+
+      {
+        path: "favorite",
+        name: "favorite",
+        component: () =>
+          import("../components/users/userProfile/UserFavorite.vue"),
+      },
+      {
+        path: "adress",
+        name: "adress",
+        component: () =>
+          import("../components/users/userProfile/UserAddress.vue"),
+      },
+      {
+        path: "logout",
+        name: "logout",
+        component: () => import("../components/users/userProfile/LogOut.vue"),
+      },
+    ],
+  },
 
   {
     path: "/detail/:id",

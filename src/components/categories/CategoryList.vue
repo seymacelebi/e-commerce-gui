@@ -29,7 +29,7 @@ export default {
     selectedCategory: "",
   }),
   computed: {
-    ...mapState(useCartStore, ["getFilterCategory"]),
+    // ...mapState(useCartStore, ["getFilterCategory"]),
     ...mapState(useProductStore, ["getProductGetters"]),
 
     filteredProducts(): Product[] {
@@ -57,7 +57,7 @@ export default {
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
     filterClouds(catName: any) {
-      this.$router.push({ name: "ProductList", path: "/productlist" });
+      //this.$router.push({ name: "ProductList", path: "/productlist" });
       console.log("click =>", catName);
       this.setfilter(catName);
     },
@@ -73,7 +73,7 @@ export default {
   },
   mounted() {
     this.getProductGetters;
-    this.getFilterCategory;
+    // this.getFilterCategory;
   },
 };
 </script>
