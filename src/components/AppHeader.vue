@@ -26,7 +26,14 @@
         hide-details
       ></v-text-field> -->
 
-      <v-btn icon>
+      <v-btn
+        icon
+        @click="
+          $router.push({
+            name: 'FavoriteProduct',
+          })
+        "
+      >
         <v-icon>mdi-heart</v-icon>
       </v-btn>
 

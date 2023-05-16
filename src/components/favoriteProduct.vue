@@ -1,10 +1,7 @@
 <template>
-  <v-row
-    justify="center"
-    v-for="(item, index) in getFavoriteProduct"
-    :key="index"
-  >
-    <v-col cols="12" class="fill-height pa-0">
+  <AppHeader></AppHeader>
+  <v-row v-for="(item, index) in getFavoriteProduct" :key="index">
+    <v-col cols="8" class="mt-15">
       <v-card color="white" theme="dark" class="ml-15 mt-10" :value="index">
         <div class="d-flex flex-no-wrap justify-space-between">
           <v-avatar class="ma-3" size="125" rounded="0">
@@ -23,18 +20,24 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useProductStore } from "../../../store/productStore";
+import { useProductStore } from "../store/productStore";
 import { mapState, mapActions } from "pinia";
-import AppHeader from "../../AppHeader.vue";
+import AppHeader from "../components/AppHeader.vue";
 export default defineComponent({
-  name: "UserFavorite",
+  name: "FavoriteProduct",
   components: { AppHeader },
+  data: () => ({
+    product: [] as any,
+  }),
   computed: {
     ...mapState(useProductStore, ["getFavoriteProduct"]),
     favoriteProducts() {
       const favoritesStore = useProductStore();
       return favoritesStore.favoriteProducts;
     },
+  },
+  methods: {
+    ...mapActions(useProductStore, ["addFavoriteProduct"]),
   },
 });
 </script>

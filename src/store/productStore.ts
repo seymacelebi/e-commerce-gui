@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Product } from "../models/entities/ProductDto";
+import { FavoriteObjectType } from "../models/types";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -13,6 +14,7 @@ const loadFromStorage = (key: string, defaultValue: any): any => {
 export const useProductStore = defineStore("product", {
   state: () => {
     return {
+      favoriteProducts: [],
       totalPrice: 0,
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
@@ -20,10 +22,21 @@ export const useProductStore = defineStore("product", {
       loading: false,
       filterCategory: [] as Array<Product>,
       categoryFiltered: [] as any,
+      favorites: loadFromStorage(
+        "userFavorites",
+        [] as FavoriteObjectType[]
+      ) as FavoriteObjectType[],
     };
   },
 
   getters: {
+    getFavoriteProduct(state) {
+      console.log("favoritePro", state.favoriteProducts);
+      return state.favoriteProducts;
+    },
+    getFavoritesState(state) {
+      return state.favorites;
+    },
     getProductGetters: (state) => {
       return state.product;
     },
@@ -43,6 +56,31 @@ export const useProductStore = defineStore("product", {
     },
   },
   actions: {
+    addFavoriteProduct(product: Product) {
+      this.favoriteProducts.push(product);
+      console.log("product", product);
+    },
+    removeFavoriteProduct(product: Product) {
+      const index = this.favoriteProducts.findIndex(
+        (favProduct) => favProduct.id === product.id
+      );
+      if (index !== -1) {
+        this.favoriteProducts.splice(index, 1);
+      }
+    },
+    addOrRemoveFavorite(newFav: FavoriteObjectType) {
+      const findedIndex = this.favorites.findIndex(
+        (fav) => fav.name === newFav.name
+      );
+      if (findedIndex == -1) {
+        this.favorites.push(newFav);
+      } else {
+        this.favorites = this.favorites.filter(
+          (fav) => fav.name !== newFav.name
+        );
+      }
+      localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
+    },
     // async getProductAction() {
     //   await axios
     //     .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")

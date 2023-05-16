@@ -19,11 +19,6 @@ export const useCartStore = defineStore("cart", {
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-      favorites: loadFromStorage(
-        "userFavorites",
-        [] as FavoriteObjectType[]
-      ) as FavoriteObjectType[],
-
       loading: false,
       totalItems: 0,
     };
@@ -49,10 +44,6 @@ export const useCartStore = defineStore("cart", {
         0
       );
     },
-
-    getFavoritesState(state) {
-      return state.favorites;
-    },
   },
   actions: {
     setAddBasket(product: Product) {
@@ -75,20 +66,6 @@ export const useCartStore = defineStore("cart", {
         console.log(this.product, "product");
         this.basket.pop();
       }
-    },
-
-    addOrRemoveFavorite(newFav: FavoriteObjectType) {
-      const findedIndex = this.favorites.findIndex(
-        (fav) => fav.name === newFav.name
-      );
-      if (findedIndex == -1) {
-        this.favorites.push(newFav);
-      } else {
-        this.favorites = this.favorites.filter(
-          (fav) => fav.name !== newFav.name
-        );
-      }
-      localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },
 
     setLoadingState(state: boolean) {

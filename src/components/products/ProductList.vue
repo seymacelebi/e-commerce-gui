@@ -72,14 +72,16 @@
             "
             >Detaya Git</v-btn
           >
-          <!-- <v-btn color="red">
-            <v-icon
-              size="small"
-              color="white"
-              :icon="checkFavIcon(titleObjectItem)"
-            >
-            </v-icon>
+          <!-- 
+          <v-btn icon @click.stop="addFavorite(product)" variant="plain">
+            <v-icon :icon="checkFavIcon(product)" color="info"></v-icon>
           </v-btn> -->
+          <v-btn @click="addToFavorites(product)">
+            <v-icon> mdi-heart </v-icon></v-btn
+          >
+          <!-- <v-btn @click="removeFromFavorites(product)"></v-btn>
+            <v-icon> mdi-shopping </v-icon></v-btn
+          > -->
 
           <v-btn color="green" @click="addProduct(product)">
             <v-icon> mdi-shopping </v-icon>
@@ -101,6 +103,7 @@ export default defineComponent({
   name: "ProductList",
   data: () => ({
     products: [] as any,
+    data: String(),
     selectedCategory: null,
     titleObjectItem: {} as any,
   }),
@@ -110,11 +113,19 @@ export default defineComponent({
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useProductStore, ["getFilterCategory"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
-    ...mapState(useCartStore, ["getFavoritesState"]),
   },
   methods: {
+    addToFavorites(product: any) {
+      const favoritesStore = useProductStore();
+      favoritesStore.addFavoriteProduct(product);
+    },
+    removeFromFavorites(product: any) {
+      const favoritesStore = useProductStore();
+      favoritesStore.removeFavoriteProduct(product);
+    },
     ...mapActions(useCartStore, ["setAddBasket"]),
     ...mapState(useProductStore, ["getProductFilteredCategory"]),
+    ...mapState(useProductStore, ["getFavoritesState"]),
     addProduct(product: any) {
       this.setAddBasket(product);
       toast.success("Sepete Eklendi");
@@ -122,20 +133,19 @@ export default defineComponent({
     },
     addFavorite(child: FavoriteObjectType) {
       this.addOrRemoveFavorite(child);
-      console.log();
     },
 
     checkFavIcon(child: FavoriteObjectType): string {
-      const findIndex = this.getFavoritesState.findIndex(
-        (fav) => fav.name === child.name
-      );
-      if (findIndex == -1) {
+      const favorites = this.getFavoritesState(); // getFavoritesState fonksiyonunu çağırarak favorileri al
+
+      const findIndex = favorites.findIndex((fav) => fav.name === child.name);
+      if (findIndex === -1) {
         return "mdi-star-outline";
       } else {
         return "mdi-star";
       }
     },
-    ...mapActions(useCartStore, ["addOrRemoveFavorite"]),
+    ...mapActions(useProductStore, ["addOrRemoveFavorite"]),
   },
 
   mounted() {
