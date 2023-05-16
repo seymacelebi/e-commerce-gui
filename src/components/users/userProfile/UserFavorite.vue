@@ -31,10 +31,6 @@ export default defineComponent({
   components: { AppHeader },
   computed: {
     ...mapState(useProductStore, ["getFavoriteProduct"]),
-    favoriteProducts() {
-      const favoritesStore = useProductStore();
-      return favoritesStore.favoriteProducts;
-    },
   },
 });
 </script>
