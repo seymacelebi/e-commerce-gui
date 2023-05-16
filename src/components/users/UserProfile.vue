@@ -8,13 +8,11 @@
       <v-col class="fill-height pr-0">
         <v-card max-width="600" style="height: auto" class="fill-height">
           <v-list nav density="compact" class="pa-0">
-            <v-list-subheader>REPORTS</v-list-subheader>
-
             <v-list-item
               v-for="(item, index) in items"
               :key="index"
               :value="item"
-            :title=item.text
+              :title="item.text"
               :to="{ name: item.name }"
               active-color="primary"
               variant="flat"
@@ -42,8 +40,7 @@
         </v-card>
       </v-col>
       <v-col class="fill-height" sm="8" md="10">
-        <v-card class="fill-height overflow-y-auto pa-0">
-          <RouterView /> </v-card
+        <v-card class="fill-height pa-0" height="auto"> <RouterView /> </v-card
       ></v-col>
     </v-row>
   </v-container>
@@ -58,12 +55,12 @@ export default defineComponent({
   data: () => ({
     selectedItem: 0,
     items: [
-      { name: "information", icon: "mdi-account", text:"Kişisel Bilgiler" },
-      { name: "order", icon: "mdi-package-variant-closed" , text:"Siparişler"},
-      { name: "favorite", icon: "mdi-star", text:"Favoriler" },
+      { name: "information", icon: "mdi-account", text: "Kişisel Bilgiler" },
+      { name: "order", icon: "mdi-package-variant-closed", text: "Siparişler" },
+      { name: "favorite", icon: "mdi-star", text: "Favoriler" },
       { name: "changepassword", icon: "mdi-lock", text: "Şifre Değiştir" },
       { name: "adress", icon: "mdi-home", text: "Adresler" },
-      { name: "logout", icon: "mdi-exit-to-app", text:"Çıkış Yap" },
+      { name: "logout", icon: "mdi-exit-to-app", text: "Çıkış Yap" },
     ],
   }),
   watch: {
