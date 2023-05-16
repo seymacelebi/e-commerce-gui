@@ -39,6 +39,12 @@ const routes = [
           import("../components/users/userProfile/UserFavorite.vue"),
       },
       {
+        path: "changepassword",
+        name: "changepassword",
+        component: () =>
+          import("../components/users/userProfile/UserChangePassword.vue"),
+      },
+      {
         path: "adress",
         name: "adress",
         component: () =>

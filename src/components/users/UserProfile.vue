@@ -11,6 +11,21 @@
             <v-list-subheader>REPORTS</v-list-subheader>
 
             <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :value="item"
+            :title=item.text
+              :to="{ name: item.name }"
+              active-color="primary"
+              variant="flat"
+              rounded
+            >
+              <template v-slot:prepend>
+                <v-icon :icon="item.icon" class="d-none d-lg-flex"></v-icon>
+              </template>
+            </v-list-item>
+
+            <!-- <v-list-item
               v-for="(item, i) in items"
               :key="i"
               :value="item"
@@ -22,12 +37,12 @@
               <template v-slot:prepend>
                 <v-icon :icon="item.icon"></v-icon>
               </template>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-card>
       </v-col>
       <v-col class="fill-height" sm="8" md="10">
-        <v-card height="auto" class="fill-height overflow-y-auto pa-0">
+        <v-card class="fill-height overflow-y-auto pa-0">
           <RouterView /> </v-card
       ></v-col>
     </v-row>
@@ -43,12 +58,12 @@ export default defineComponent({
   data: () => ({
     selectedItem: 0,
     items: [
-      { name: "Kişiler Bilgiler", icon: "mdi-account" },
-      { name: "Siparişler", icon: "mdi-package-variant-closed" },
-      { name: "Favoriler", icon: "mdi-star" },
-      { name: "Şifre Değiştir", icon: "mdi-lock" },
-      { name: "Adres", icon: "mdi-home" },
-      { name: "Çıkış Yap", icon: "mdi-exit-to-app" },
+      { name: "information", icon: "mdi-account", text:"Kişisel Bilgiler" },
+      { name: "order", icon: "mdi-package-variant-closed" , text:"Siparişler"},
+      { name: "favorite", icon: "mdi-star", text:"Favoriler" },
+      { name: "changepassword", icon: "mdi-lock", text: "Şifre Değiştir" },
+      { name: "adress", icon: "mdi-home", text: "Adresler" },
+      { name: "logout", icon: "mdi-exit-to-app", text:"Çıkış Yap" },
     ],
   }),
   watch: {
