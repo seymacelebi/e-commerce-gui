@@ -142,5 +142,6 @@ export default defineComponent({
   data: () => ({
     loading: false,
   }),
+  methods: {},
 });
 </script>

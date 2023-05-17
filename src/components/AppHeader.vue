@@ -75,8 +75,6 @@ import { defineComponent } from "vue";
 import SearchDialog from "../components/dialogs/SearchDialog.vue";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../store/productStore";
-import { Product } from "../models/entities/ProductDto";
-import axios from "axios";
 import { computed } from "vue";
 export default defineComponent({
   name: "AppHeader",
@@ -85,8 +83,6 @@ export default defineComponent({
   data: () => ({
     searchDialogVisible: false,
     searchText: "",
-    products: [],
-    searchMenuArray: [] as any,
   }),
 
   computed: {
@@ -95,7 +91,6 @@ export default defineComponent({
   },
   methods: {
     searchItems(): any {
-      console.log("girdi");
       const filteredProducts = computed(() => {
         return this.getProductGetters.filter((product) =>
           product.title.toLowerCase().includes(this.searchText.toLowerCase())
@@ -107,14 +102,9 @@ export default defineComponent({
       };
     },
   },
-  watch: {
-    searchItems() {
-      console.log("searchItem", this.searchItems());
-    },
-  },
+  watch: {},
   mounted() {
     this.searchItems;
-    console.log(this.searchItems, "filteredPro");
   },
 });
 </script>

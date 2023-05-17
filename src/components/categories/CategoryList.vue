@@ -17,19 +17,14 @@
 <script lang="ts">
 import { useProductStore } from "../../store/productStore";
 import { mapState, mapActions } from "pinia";
-import axios from "axios";
-import { useCartStore } from "../../store/cartStore";
 import { Product } from "../../models/entities/ProductDto";
 import { Category } from "../../models/entities/CategoryDto";
 export default {
   data: () => ({
     categories: [] as any,
-
     selectedCategoryId: null,
-    selectedCategory: "",
   }),
   computed: {
-    // ...mapState(useCartStore, ["getFilterCategory"]),
     ...mapState(useProductStore, ["getProductGetters"]),
 
     filteredProducts(): Product[] {
@@ -57,23 +52,12 @@ export default {
   methods: {
     ...mapActions(useProductStore, ["setfilter"]),
     filterClouds(catName: any) {
-      //this.$router.push({ name: "ProductList", path: "/productlist" });
       console.log("click =>", catName);
       this.setfilter(catName);
-    },
-    filteredProducts() {
-      if (this.selectedCategory === "") {
-        return this.getProductGetters;
-      } else {
-        return this.getProductGetters.filter(
-          (p: any) => p.category === this.selectedCategory
-        );
-      }
     },
   },
   mounted() {
     this.getProductGetters;
-    // this.getFilterCategory;
   },
 };
 </script>

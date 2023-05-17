@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import { Product } from "../models/entities/ProductDto";
-import { FavoriteObjectType } from "../models/types";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -30,7 +28,6 @@ export const useCartStore = defineStore("cart", {
       return state.product;
     },
     getBasketGetters: (state) => {
-      console.log(state.basket, "basket");
       return state.basket;
     },
     GetBasketPrice: (state) => {
@@ -51,7 +48,6 @@ export const useCartStore = defineStore("cart", {
       const existingItem = this.basket.find((i: any) => i.id === product.id);
       if (existingItem) {
         existingItem.quantity++;
-        console.log(existingItem, "existingItem");
       } else {
         this.basket.push({ ...product, quantity: 1 });
       }
@@ -64,7 +60,6 @@ export const useCartStore = defineStore("cart", {
         console.log("23", existingItem);
         existingItem.quantity--;
       } else {
-        console.log(this.product, "product");
         this.basket.pop();
       }
     },

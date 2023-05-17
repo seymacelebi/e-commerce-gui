@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import axios from "axios";
 import { Product } from "../models/entities/ProductDto";
 import { FavoriteObjectType } from "../models/types";
 
@@ -15,11 +14,9 @@ export const useProductStore = defineStore("product", {
   state: () => {
     return {
       favoriteProducts: [],
-      totalPrice: 0,
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
       basketLength: 0,
-      loading: false,
       filterCategory: [] as Array<Product>,
       categoryFiltered: [] as any,
       favorites: loadFromStorage(
@@ -44,7 +41,6 @@ export const useProductStore = defineStore("product", {
       return state.basket;
     },
     getFilterCategory: (state) => {
-      console.log(state.filterCategory, "filterenmişcategory");
       return state.filterCategory;
     },
     getBasketLength: (state) => {
@@ -98,6 +94,7 @@ export const useProductStore = defineStore("product", {
       );
     },
     setfilter(catName: string) {
+      console.log("setCategory", this.filterCategory);
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.category.name == catName
       );
@@ -115,11 +112,5 @@ export const useProductStore = defineStore("product", {
       });
       console.log(this.product, "product");
     },
-    // async getAllProduct() {
-    //   const response = await fetch("https://fakestoreapi.com/products");
-    //   const data = await response.json();
-    //   this.product = data;
-    //   console.log(this.product, "product");
-    // },
   },
 });
