@@ -14,6 +14,11 @@ const routes = [
     component: () => import("../components/products/ProductList.vue"),
   },
   {
+    path: "/productform",
+    name: "ProductForm",
+    component: () => import("../components/products/ProductForm.vue"),
+  },
+  {
     path: "/favorite",
     name: "FavoriteProduct",
     component: () => import("../components/favoriteProduct.vue"),
