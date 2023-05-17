@@ -86,7 +86,7 @@
       <v-card class="auto ml-15" max-width="344">
         <v-card-item>
           <div>
-            <div class="text-h4 mb-1">Checkout</div>
+            <div class="text-h4 mb-1">Ödeme Yap</div>
 
             <div class="text-h6 mb-1">Sepet Tutarı: {{ totalPrice }}</div>
           </div>
@@ -103,7 +103,7 @@
             :size="buttonResponsive"
             variant="flat"
           >
-            Checkout
+            Ödeme Yap
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -152,8 +152,8 @@ export default defineComponent({
 
 .top-right {
   position: absolute;
-  top: 0;
+  top: 20;
   right: 0;
-  margin: 10px;
+  margin: 5px;
 }
 </style>
