@@ -35,7 +35,7 @@
                       @click="addProduct(item)"
                     >
                     </v-btn>
-                    <v-card-title> {{ item.quantity + 1 }} </v-card-title>
+                    <v-card-title> {{ item.quantity }} </v-card-title>
                     <v-btn
                       variant="outlined"
                       size="small"

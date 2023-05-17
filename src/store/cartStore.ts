@@ -30,6 +30,7 @@ export const useCartStore = defineStore("cart", {
       return state.product;
     },
     getBasketGetters: (state) => {
+      console.log(state.basket, "basket");
       return state.basket;
     },
     GetBasketPrice: (state) => {
@@ -59,7 +60,7 @@ export const useCartStore = defineStore("cart", {
 
     setDeleteBasket(product: Product) {
       const existingItem = this.basket.find((i: any) => i.id === product.id);
-      if (existingItem?.quantity !== 0) {
+      if (existingItem?.quantity !== 1) {
         console.log("23", existingItem);
         existingItem.quantity--;
       } else {
