@@ -13,6 +13,7 @@ const loadFromStorage = (key: string, defaultValue: any): any => {
 export const useProductStore = defineStore("product", {
   state: () => {
     return {
+      categories: [] as any,
       favoriteProducts: [],
       product: [] as Array<Product>,
       basket: [] as Array<Product>,
@@ -46,6 +47,11 @@ export const useProductStore = defineStore("product", {
     getBasketLength: (state) => {
       return state.basketLength;
     },
+    getCategoryList(state) {
+      console.log("deneem", state.categories);
+      return state.categories;
+    },
+
     getProductFilteredCategory: (state) => {
       console.log("categoryFiltered", state.categoryFiltered);
       return state.categoryFiltered;
@@ -64,6 +70,11 @@ export const useProductStore = defineStore("product", {
         this.favoriteProducts.splice(index, 1);
       }
     },
+    categoryList() {
+      this.categories = this.getProductGetters.map(
+        (product: any) => product.category.name
+      );
+    },
     addOrRemoveFavorite(newFav: FavoriteObjectType) {
       const findedIndex = this.favorites.findIndex(
         (fav) => fav.name === newFav.name
@@ -77,17 +88,7 @@ export const useProductStore = defineStore("product", {
       }
       localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },
-    // async getProductAction() {
-    //   await axios
-    //     .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-    //     .then((product) => {
-    //       this.product = product.data;
-    //       console.log("productgettersgelen", product);
-    //       this.product.forEach((x: any) => {
-    //         x.quantity = 0;
-    //       });
-    //     });
-    // },
+
     productWithFilteredCategories() {
       this.categoryFiltered = Array.from(
         new Set(this.getProductGetters.map((p) => p.category))
@@ -114,3 +115,14 @@ export const useProductStore = defineStore("product", {
     },
   },
 });
+// async getProductAction() {
+//   await axios
+//     .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
+//     .then((product) => {
+//       this.product = product.data;
+//       console.log("productgettersgelen", product);
+//       this.product.forEach((x: any) => {
+//         x.quantity = 0;
+//       });
+//     });
+// },
