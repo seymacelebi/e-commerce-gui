@@ -106,6 +106,7 @@ export default defineComponent({
     data: String(),
     selectedCategory: null,
     titleObjectItem: {} as any,
+    categories: [] as any,
   }),
 
   computed: {
@@ -115,6 +116,10 @@ export default defineComponent({
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
+    ...mapActions(useCartStore, ["setAddBasket"]),
+    ...mapState(useProductStore, ["getFavoritesState"]),
+    ...mapActions(useProductStore, ["addOrRemoveFavorite"]),
+
     addToFavorites(product: any) {
       const favoritesStore = useProductStore();
       favoritesStore.addFavoriteProduct(product);
@@ -123,13 +128,10 @@ export default defineComponent({
       const favoritesStore = useProductStore();
       favoritesStore.removeFavoriteProduct(product);
     },
-    ...mapActions(useCartStore, ["setAddBasket"]),
-    ...mapState(useProductStore, ["getProductFilteredCategory"]),
-    ...mapState(useProductStore, ["getFavoritesState"]),
+
     addProduct(product: any) {
       this.setAddBasket(product);
       toast.success("Sepete Eklendi");
-      console.log("ekledi", this.getBasketGetters);
     },
     addFavorite(child: FavoriteObjectType) {
       this.addOrRemoveFavorite(child);
@@ -145,12 +147,10 @@ export default defineComponent({
         return "mdi-star";
       }
     },
-    ...mapActions(useProductStore, ["addOrRemoveFavorite"]),
   },
 
   mounted() {
     this.getAllProduct;
-    this.getProductFilteredCategory;
     this.getBasketGetters;
     this.getFilterCategory;
   },

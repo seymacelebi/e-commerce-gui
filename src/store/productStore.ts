@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Product } from "../models/entities/ProductDto";
 import { FavoriteObjectType } from "../models/types";
+import { Category } from "../models/entities/CategoryDto";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -13,6 +14,7 @@ const loadFromStorage = (key: string, defaultValue: any): any => {
 export const useProductStore = defineStore("product", {
   state: () => {
     return {
+      selectedCategoryId: null,
       categories: [] as any,
       favoriteProducts: [],
       product: [] as Array<Product>,
@@ -47,15 +49,6 @@ export const useProductStore = defineStore("product", {
     getBasketLength: (state) => {
       return state.basketLength;
     },
-    getCategoryList(state) {
-      console.log("deneem", state.categories);
-      return state.categories;
-    },
-
-    getProductFilteredCategory: (state) => {
-      console.log("categoryFiltered", state.categoryFiltered);
-      return state.categoryFiltered;
-    },
   },
   actions: {
     addFavoriteProduct(product: Product) {
@@ -70,11 +63,6 @@ export const useProductStore = defineStore("product", {
         this.favoriteProducts.splice(index, 1);
       }
     },
-    categoryList() {
-      this.categories = this.getProductGetters.map(
-        (product: any) => product.category.name
-      );
-    },
     addOrRemoveFavorite(newFav: FavoriteObjectType) {
       const findedIndex = this.favorites.findIndex(
         (fav) => fav.name === newFav.name
@@ -88,41 +76,27 @@ export const useProductStore = defineStore("product", {
       }
       localStorage.setItem("userFavorites", JSON.stringify(this.favorites));
     },
-
-    productWithFilteredCategories() {
-      this.categoryFiltered = Array.from(
-        new Set(this.getProductGetters.map((p) => p.category))
-      );
-    },
     setfilter(catName: string) {
-      console.log("setCategory", this.filterCategory);
       this.filterCategory = this.getProductGetters.filter(
         (x) => x.category.name == catName
       );
     },
+
     async getAllProduct() {
       // const response = await fetch('https://fakestoreapi.com/products')
       const response = await fetch(
         "https://api.escuelajs.co/api/v1/products?offset=0&limit=51"
       );
-
       const data = await response.json();
       this.product = data;
+
       this.product.forEach((x: any) => {
         x.quantity = 0;
       });
-      console.log(this.product, "product");
+      this.product.forEach((data: any) => {
+        this.categories = data.category.name;
+        console.log(this.categories, "777");
+      });
     },
   },
 });
-// async getProductAction() {
-//   await axios
-//     .get("https://api.escuelajs.co/api/v1/products?offset=0&limit=70")
-//     .then((product) => {
-//       this.product = product.data;
-//       console.log("productgettersgelen", product);
-//       this.product.forEach((x: any) => {
-//         x.quantity = 0;
-//       });
-//     });
-// },

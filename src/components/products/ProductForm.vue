@@ -75,7 +75,6 @@
                           :rules="[(v) => !!v || 'Bu alan zorunludur!']"
                           item-title="name"
                           item-value="id"
-                          :items="categories"
                           :hide-details="false"
                           density="compact"
                           clearable
@@ -136,69 +135,13 @@
   </v-card>
 </template>
 <script lang="ts">
-import { mapState } from "pinia";
 import { defineComponent } from "vue";
-import { useProductStore } from "../../store/productStore";
-import { Product } from "../../models/entities/ProductDto";
-import { Category } from "../../models/entities/CategoryDto";
 
 export default defineComponent({
   name: "ProductForm",
-  data: () => ({
-    loading: false,
-    categories: [] as any,
-    selectedCategoryId: null,
-  }),
-  computed: {
-    ...mapState(useProductStore, ["getProductGetters"]),
-    ...mapState(useProductStore, ["getProductFilteredCategory"]),
-    ...mapState(useProductStore, ["getCategoryList"]),
-    filteredProducts(): Product[] {
-      if (this.selectedCategoryId === null) {
-        return this.getProductGetters;
-      } else {
-        return this.getProductGetters.filter((product: Product) => {
-          return product.category.id === this.selectedCategoryId;
-        });
-      }
-    },
-    filteredCategories(): Category[] {
-      const categories: Category[] = [];
-      this.filteredProducts.forEach((product: Product) => {
-        if (
-          !categories.some((c: Category) => c.name === product.category.name)
-        ) {
-          categories.push(product.category);
-        }
-      });
-      return categories;
-    },
-    // categoryName(): any {
-    //   const categoryNames = this.filteredCategories().map(
-    //     (category: any) => category.name
-    //   );
-    //   return categoryNames;
-    // },
-  },
-  methods: {
-    // categoryList() {
-    //   this.filteredProducts.forEach((product: any) => {
-    //     if (!this.categories.includes(product.category.name)) {
-    //       this.categories.push(product.category.name);
-    //     }
-    //   });
-    // },
-    categoryList() {
-      this.categories = this.getProductGetters.map(
-        (product: any) => product.category.name
-      );
-      return this.categories;
-    },
-  },
-  mounted() {
-    console.log("777", this.getProductFilteredCategory);
-    console.log(this.categories, "1q3");
-    this.getCategoryList;
-  },
+  data: () => ({}),
+  computed: {},
+  methods: {},
+  mounted() {},
 });
 </script>

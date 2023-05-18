@@ -27,19 +27,19 @@ export default {
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
 
-    filteredProducts(): Product[] {
-      if (this.selectedCategoryId === null) {
-        return this.getProductGetters;
-      } else {
-        return this.getProductGetters.filter((product: Product) => {
-          return product.category.id === this.selectedCategoryId;
-        });
-      }
-    },
+    // filteredProducts(): Product[] {
+    //   if (this.selectedCategoryId === null) {
+    //     return this.getProductGetters;
+    //   } else {
+    //     return this.getProductGetters.filter((product: Product) => {
+    //       return product.category.id === this.selectedCategoryId;
+    //     });
+    //   }
+    // },
 
     filteredCategories(): Category[] {
       const categories: Category[] = [];
-      this.filteredProducts.forEach((product: Product) => {
+      this.getProductGetters.forEach((product: Product) => {
         if (
           !categories.some((c: Category) => c.name === product.category.name)
         ) {
