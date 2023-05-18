@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { Product } from "../models/entities/ProductDto";
 import { FavoriteObjectType } from "../models/types";
-import { Category } from "../models/entities/CategoryDto";
 
 const loadFromStorage = (key: string, defaultValue: any): any => {
   const item = localStorage.getItem(key);
@@ -44,6 +43,7 @@ export const useProductStore = defineStore("product", {
       return state.basket;
     },
     getFilterCategory: (state) => {
+      console.log(state.filterCategory, "filteredCategory");
       return state.filterCategory;
     },
     getBasketLength: (state) => {
@@ -89,13 +89,10 @@ export const useProductStore = defineStore("product", {
       );
       const data = await response.json();
       this.product = data;
+      console.log(this.product, "pro");
 
       this.product.forEach((x: any) => {
         x.quantity = 0;
-      });
-      this.product.forEach((data: any) => {
-        this.categories = data.category.name;
-        console.log(this.categories, "777");
       });
     },
   },

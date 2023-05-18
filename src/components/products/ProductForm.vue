@@ -72,6 +72,7 @@
                           :menu-props="{ maxHeight: '200' }"
                           label="Kategori Adı"
                           variant="outlined"
+                          :items="categories"
                           :rules="[(v) => !!v || 'Bu alan zorunludur!']"
                           item-title="name"
                           item-value="id"
@@ -118,12 +119,7 @@
                 </v-col>
               </v-row>
               <v-col align="end">
-                <v-btn
-                  type="submit"
-                  variant="flat"
-                  size="large"
-                  color="info"
-                  :loading="loading"
+                <v-btn type="submit" variant="flat" size="large" color="info"
                   >Kaydet</v-btn
                 >
               </v-col>
@@ -136,12 +132,43 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import { useProductStore } from "../../store/productStore";
+import { mapState, mapActions } from "pinia";
+import { Product } from "../../models/entities/ProductDto";
+import { Category } from "../../models/entities/CategoryDto";
 export default defineComponent({
   name: "ProductForm",
-  data: () => ({}),
-  computed: {},
-  methods: {},
-  mounted() {},
+  data: () => ({
+    categories: [] as any,
+    filterCategory: [] as any,
+  }),
+  computed: {
+    ...mapState(useProductStore, ["getProductGetters"]),
+    ...mapActions(useProductStore, ["getAllProduct"]),
+  },
+  methods: {
+    filteredCategories(): Category[] {
+      this.getProductGetters.forEach((product: Product) => {
+        if (
+          !this.categories.some(
+            (c: Category) => c.name === product.category.name
+          )
+        ) {
+          this.categories.push(product.category);
+        }
+      });
+      return this.categories;
+    },
+    getCategory() {
+      this.categories = this.getProductGetters.map(
+        (product: any) => product.category.name
+      );
+    },
+  },
+  mounted() {
+    this.getAllProduct;
+    console.log(this.categories, "wsqw");
+    this.getProductGetters;
+  },
 });
 </script>
