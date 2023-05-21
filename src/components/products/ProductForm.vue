@@ -71,15 +71,22 @@
                         <v-autocomplete
                           :menu-props="{ maxHeight: '200' }"
                           label="Kategori Adı"
+                          v-model="selectedCategory"
                           variant="outlined"
-                          :items="categories"
+                          
                           :rules="[(v) => !!v || 'Bu alan zorunludur!']"
                           item-title="name"
+                           :items="categoryNames"
                           item-value="id"
                           :hide-details="false"
                           density="compact"
                           clearable
                         ></v-autocomplete>
+                        <!-- <v-autocomplete
+                          v-model="selectedCategory"
+                          :items="categoryNames"
+                          label="Kategori Seç"
+                        /> -->
                       </v-col>
                     </v-row>
                     <v-row>
@@ -129,6 +136,7 @@
       </v-card>
     </v-col>
   </v-card>
+  
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -142,25 +150,24 @@ export default defineComponent({
     category: [] as any,
     categories: [] as any,
     filterCategory: [] as any,
+    selectedCategory: "",
   }),
   computed: {
+    categoryNames(){
+      const uniqueCategories = new Set();
+      this.getProductGetters.forEach((product:any)=> {
+        uniqueCategories.add(product.category.name);
+      });
+      return Array.from(uniqueCategories);
+    },
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
-   getCategoryList(){
-   this.getProductGetters.forEach((data:any)=>{
-    this.category = data.category;
-    if(!this.categories.find((c:any)=> c.id === this.category.id))
-    this.categories.push(this.category);
-   })
-   return this.categories;
-  },
+  
   },
   mounted() {
-
     this.getAllProduct;
-    console.log(this.categories, "this.categories");
     this.getProductGetters;
   },
 });
