@@ -139,6 +139,7 @@ import { Category } from "../../models/entities/CategoryDto";
 export default defineComponent({
   name: "ProductForm",
   data: () => ({
+    category: [] as any,
     categories: [] as any,
     filterCategory: [] as any,
   }),
@@ -147,27 +148,19 @@ export default defineComponent({
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
-    filteredCategories(): Category[] {
-      this.getProductGetters.forEach((product: Product) => {
-        if (
-          !this.categories.some(
-            (c: Category) => c.name === product.category.name
-          )
-        ) {
-          this.categories.push(product.category);
-        }
-      });
-      return this.categories;
-    },
-    getCategory() {
-      this.categories = this.getProductGetters.map(
-        (product: any) => product.category.name
-      );
-    },
+   getCategoryList(){
+   this.getProductGetters.forEach((data:any)=>{
+    this.category = data.category;
+    if(!this.categories.find((c:any)=> c.id === this.category.id))
+    this.categories.push(this.category);
+   })
+   return this.categories;
+  },
   },
   mounted() {
+
     this.getAllProduct;
-    console.log(this.categories, "wsqw");
+    console.log(this.categories, "this.categories");
     this.getProductGetters;
   },
 });

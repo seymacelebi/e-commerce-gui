@@ -49,6 +49,10 @@ export const useProductStore = defineStore("product", {
     getBasketLength: (state) => {
       return state.basketLength;
     },
+    // getCategoryList: (state) => {
+    //   console.log(state.categories, "454");
+    //   return state.categories;
+    // },
   },
   actions: {
     addFavoriteProduct(product: Product) {
@@ -81,6 +85,15 @@ export const useProductStore = defineStore("product", {
         (x) => x.category.name == catName
       );
     },
+  //  getCategoryList(){
+  //   this.getProductGetters.forEach((product: any) => {
+  //     const category = product.category;
+  //     if (!this.categories.find((c: any) => c.id === category.id)) {
+  //       this.categories.push(category);
+  //     }
+  //   });
+  //   return this.categories;
+  //  },
 
     async getAllProduct() {
       // const response = await fetch('https://fakestoreapi.com/products')
@@ -94,6 +107,26 @@ export const useProductStore = defineStore("product", {
       this.product.forEach((x: any) => {
         x.quantity = 0;
       });
+   
+
+      // program to extract value as an array from an array of objects
+
+      // function extractValue(arr:any, prop:any) {
+      //   // extract value from property
+      //   let extractedValue = arr.map((item:any) => item[prop]);
+
+      //   return extractedValue;
+      // }
+
+      // const objArray = [
+      //   { a: 1, b: 2 },
+      //   { a: 4, b: 5 },
+      //   { a: 8, b: 9 },
+      // ];
+
+      // // passing an array of objects and property 'a' to extract
+      // const result = extractValue(this.product, "title");
+      // console.log(result);
     },
   },
 });
