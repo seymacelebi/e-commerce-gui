@@ -28,6 +28,7 @@
                   </v-col>
                   <v-col class="text-center">
                     <v-file-input
+                      v-model="body.images"
                       class="d-none"
                       type="file"
                       ref="uploader"
@@ -60,6 +61,7 @@
                       <v-col>
                         <v-text-field
                           clearable
+                          v-model="body.title"
                           label="Ürün Adı"
                           variant="outlined"
                           density="compact"
@@ -71,27 +73,22 @@
                         <v-autocomplete
                           :menu-props="{ maxHeight: '200' }"
                           label="Kategori Adı"
-                          v-model="selectedCategory"
+                          v-model="body.selectedCategory"
                           variant="outlined"
-                          
                           :rules="[(v) => !!v || 'Bu alan zorunludur!']"
                           item-title="name"
-                           :items="categoryNames"
+                          :items="categoryNames"
                           item-value="id"
                           :hide-details="false"
                           density="compact"
                           clearable
                         ></v-autocomplete>
-                        <!-- <v-autocomplete
-                          v-model="selectedCategory"
-                          :items="categoryNames"
-                          label="Kategori Seç"
-                        /> -->
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col>
                         <v-text-field
+                          v-model="body.price"
                           clearable
                           label="Ürün Fiyatı"
                           variant="outlined"
@@ -103,6 +100,7 @@
                       <v-col>
                         <v-text-field
                           clearable
+                          v-model="body.quantity"
                           label="Ürün Miktarı"
                           variant="outlined"
                           density="compact"
@@ -114,19 +112,24 @@
                     <v-row>
                       <v-textarea
                         clearable
+                        v-model="body.description"
                         auto-grow
                         variant="outlined"
                         bg-color="white"
                         clear-icon="mdi-close-circle"
                         label="Ürün Açıklaması"
-                        model-value="Ürün açıklaması giriniz."
                       ></v-textarea>
                     </v-row>
                   </v-col>
                 </v-col>
               </v-row>
               <v-col align="end">
-                <v-btn type="submit" variant="flat" size="large" color="info"
+                <v-btn
+                  type="submit"
+                  variant="flat"
+                  size="large"
+                  color="info"
+                  @click="addProduct"
                   >Kaydet</v-btn
                 >
               </v-col>
@@ -136,39 +139,73 @@
       </v-card>
     </v-col>
   </v-card>
-  
 </template>
 <script lang="ts">
+import { useToast } from "vue-toastification";
+const toast = useToast();
 import { defineComponent } from "vue";
 import { useProductStore } from "../../store/productStore";
 import { mapState, mapActions } from "pinia";
-import { Product } from "../../models/entities/ProductDto";
 import { Category } from "../../models/entities/CategoryDto";
+import { Product } from "../../models/entities/ProductDto";
 export default defineComponent({
   name: "ProductForm",
   data: () => ({
-    category: [] as any,
-    categories: [] as any,
-    filterCategory: [] as any,
-    selectedCategory: "",
+    body: {
+      id: 0,
+      selectedCategory: "",
+      category: {
+        name: "",
+      } as any,
+      title: "",
+      price: "",
+      quantity: 0,
+      description: "",
+      images: [],
+      creationAt: new Date(),
+      updatedAt: new Date(),
+    } as any,
   }),
   computed: {
-    categoryNames(){
-      const uniqueCategories = new Set();
-      this.getProductGetters.forEach((product:any)=> {
-        uniqueCategories.add(product.category.name);
+    filteredCategories(): Category[] {
+      const categories: Category[] = [];
+      this.getProductGetters.forEach((product: Product) => {
+        if (
+          !categories.some((c: Category) => c.name === product.category.name)
+        ) {
+          categories.push(product.category);
+        }
       });
+      return categories;
+    },
+    categoryNames() {
+      const uniqueCategories = new Set();
+      this.getProductGetters.forEach((product: any) => {
+        uniqueCategories.add(product.category.name);
+        // console.log(product.category, "unique");
+      });
+
       return Array.from(uniqueCategories);
     },
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
   methods: {
-  
+    addProduct() {
+      this.getProductGetters.push(this.body);
+      toast.success("Ürün Oluşturuldu");
+      console.log(this.body, "body");
+      this.body = {};
+    },
   },
   mounted() {
     this.getAllProduct;
     this.getProductGetters;
+  },
+  watch: {
+    "body.selectedCategory"(val: any) {
+      console.log(val);
+    },
   },
 });
 </script>

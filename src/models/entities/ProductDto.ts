@@ -12,6 +12,7 @@ export class Product {
     this.category = {
       id: 0,
       name: "",
+      image: "",
     };
   }
   id: number;

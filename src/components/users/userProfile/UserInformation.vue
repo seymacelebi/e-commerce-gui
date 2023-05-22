@@ -3,63 +3,57 @@
     <v-col cols="12">
       <v-card ref="form">
         <v-card-text>
+          <v-row>
+            <v-col>
+              <v-text-field
+                ref="name"
+                v-model="firstName"
+                :rules="[() => !!firstName || 'This field is required']"
+                :error-messages="errorMessages"
+                label="İsim"
+                placeholder="İsim"
+                required
+              ></v-text-field
+            ></v-col>
+            <v-col>
+              <v-text-field
+                ref="name"
+                v-model="lastName"
+                :rules="[() => !!lastName || 'This field is required']"
+                :error-messages="errorMessages"
+                label="Soyisim"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
           <v-text-field
             ref="name"
-            v-model="name"
-            :rules="[() => !!name || 'This field is required']"
+            v-model="email"
+            :rules="[() => !!email || 'This field is required']"
             :error-messages="errorMessages"
-            label="Full Name"
+            label="Email"
             placeholder="John Doe"
             required
           ></v-text-field>
           <v-text-field
-            ref="address"
-            v-model="address"
-            :rules="[
-              () => !!address || 'This field is required',
-              () =>
-                (!!address && address.length <= 25) ||
-                'Address must be less than 25 characters',
-              addressCheck,
-            ]"
-            label="Address Line"
-            placeholder="Snowy Rock Pl"
-            counter="25"
+            ref="name"
+            v-model="password"
+            :rules="[() => !!password || 'This field is required']"
+            :error-messages="errorMessages"
+            label="Şifre"
+            placeholder="John Doe"
             required
           ></v-text-field>
           <v-text-field
-            ref="city"
-            v-model="city"
-            :rules="[() => !!city || 'This field is required', addressCheck]"
-            label="City"
-            placeholder="El Paso"
+            ref="name"
+            v-model="phoneNumber"
+            :rules="[() => !!phoneNumber || 'This field is required']"
+            :error-messages="errorMessages"
+            label="Telefon Numarası"
+            placeholder="John Doe"
             required
           ></v-text-field>
-          <v-text-field
-            ref="state"
-            v-model="state"
-            :rules="[() => !!state || 'This field is required']"
-            label="State/Province/Region"
-            required
-            placeholder="TX"
-          ></v-text-field>
-          <v-text-field
-            ref="zip"
-            v-model="zip"
-            :rules="[() => !!zip || 'This field is required']"
-            label="ZIP / Postal Code"
-            required
-            placeholder="79938"
-          ></v-text-field>
-          <v-autocomplete
-            ref="country"
-            v-model="country"
-            :rules="[() => !!country || 'This field is required']"
-            :items="countries"
-            label="Country"
-            placeholder="Select..."
-            required
-          ></v-autocomplete>
         </v-card-text>
         <v-divider class="mt-12"></v-divider>
         <v-card-actions>
@@ -68,20 +62,16 @@
           <v-slide-x-reverse-transition>
             <v-tooltip v-if="formHasErrors" location="left">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  class="my-0"
-                  v-bind="attrs"
-                  @click="resetForm"
-                  v-on="on"
-                >
+                <v-btn icon class="my-0" v-bind="attrs" v-on="on">
                   <v-icon>mdi-refresh</v-icon>
                 </v-btn>
               </template>
               <span>Refresh form</span>
             </v-tooltip>
           </v-slide-x-reverse-transition>
-          <v-btn color="primary" variant="text" @click="submit"> Submit </v-btn>
+          <v-btn color="primary" variant="text" @click="submitForm">
+            Submit
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -94,37 +84,37 @@ export default defineComponent({
   name: "UserInformation",
   data: () => ({
     errorMessages: "",
-    name: null,
-    address: null,
-    city: null,
-    state: null,
-    zip: null,
-    country: null,
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    phoneNumber: "",
     formHasErrors: false,
   }),
   methods: {
-    addressCheck() {
-      this.errorMessages =
-        this.address && !this.name ? `Hey! I'm required` : "";
+    async submitForm() {
+      const data = {
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        phoneNumber: this.phoneNumber,
+        password: this.password,
+      };
+      try {
+        const response = await fetch(" http://localhost:3000/users", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
 
-      return true;
-    },
-    resetForm() {
-      this.errorMessages = [];
-      this.formHasErrors = false;
-
-      Object.keys(this.form).forEach((f) => {
-        this.$refs[f].reset();
-      });
-    },
-    submit() {
-      this.formHasErrors = false;
-
-      Object.keys(this.form).forEach((f) => {
-        if (!this.form[f]) this.formHasErrors = true;
-
-        this.$refs[f].validate(true);
-      });
+        if (response.ok) {
+          const jsonResponse = await response.json();
+          console.log(jsonResponse);
+        } else {
+          console.log("POST request failed");
+        }
+      } catch (error) {
+        console.log("Error:", error);
+      }
     },
   },
 });
