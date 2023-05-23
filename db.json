@@ -1,69 +1,20 @@
 {
-    "products":[
+  "users": [
     {
-        "productid":1,
-        "quantity":1,
-        "title":"Palto",
-        "description":"Kemerli el yapımı palto",
-        "price":"700$",
-        "url":"https://www.linkpicture.com/q/download_409.jpg",
-        "categoryId":1
+      "id": "1",
+      "firstName": "Some",
+      "lastName": "Detail",
+      "phoneNumber": "05075334525",
+      "email": "email@email.com",
+      "password": "123"
     },
     {
-        "productid":2,
-        "quantity":1,
-        "title":"Elbise",
-        "description":"Kemerli Elbise",
-        "price":"100$",
-        "url":"https://www.linkpicture.com/q/ALLEN1-1000x1500.webp",
-        "categoryId":2
-    },
-    {
-        "productid":3,
-        "quantity":1,
-        "title":"Pantolon",
-        "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac metus in massa vestibulum lacinia sed id lectus. . Aliquam nunc enim, tristique vel dictum ut, malesuada ac diam. In consequat eleifend consequat. Pellentesque in dapibus libero.",
-        "price":"50$",
-        "url":"https://www.linkpicture.com/q/download-7_3.jpg",
-        "categoryId":3
-    },
-    {
-        "productid":4,
-        "quantity":1,
-        "title":"Palto",
-        "description":"Kapüşonlu kapitone anorak",
-        "price":"150$",
-        "url":"https://www.linkpicture.com/q/download-4_43.jpg",
-        "categoryId":1
+      "email": "deneme@deneme.com",
+      "firstName": "dene",
+      "lastName": "dene",
+      "phoneNumber": "05075340355",
+      "password": "12364",
+      "id": "YkdmaMB"
     }
-
- 
-],
-
-    "categories": [
-    {
-        "id": 1,
-        "name":"Dış Giyim",     
-        "url":"https://www.linkpicture.com/q/download_409.jpg"
-    },
-    {
-        "id": 2,
-        "name":"Üst Giyim",
-        "url":"https://www.linkpicture.com/q/download-1_101.jpg"
-        
-    },
-    {
-        "id": 3,
-        "name":"Alt Giyim",
-        "url":"https://www.linkpicture.com/q/75-1000x1500.webp"
-        
-    },
-    {
-        "id": 4,
-        "name":"Elbise",
-       "url":"https://www.linkpicture.com/q/ALLEN1-1000x1500.webp"
-        
-    }
-],
-"carts":[]
+  ]
 }

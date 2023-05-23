@@ -7,7 +7,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="firstName"
+                v-model="body.firstName"
                 :rules="[() => !!firstName || 'This field is required']"
                 :error-messages="errorMessages"
                 label="İsim"
@@ -69,7 +69,7 @@
               <span>Refresh form</span>
             </v-tooltip>
           </v-slide-x-reverse-transition>
-          <v-btn color="primary" variant="text" @click="submitForm">
+          <v-btn color="primary" variant="text" @click="createUser">
             Submit
           </v-btn>
         </v-card-actions>
@@ -79,11 +79,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import axios from "axios";
 export default defineComponent({
   name: "UserInformation",
   data: () => ({
     errorMessages: "",
+    body: {} as any,
     email: "",
     firstName: "",
     lastName: "",
@@ -92,7 +93,7 @@ export default defineComponent({
     formHasErrors: false,
   }),
   methods: {
-    async submitForm() {
+    async createUser() {
       const data = {
         email: this.email,
         firstName: this.firstName,
@@ -100,22 +101,23 @@ export default defineComponent({
         phoneNumber: this.phoneNumber,
         password: this.password,
       };
-      try {
-        const response = await fetch(" http://localhost:3000/users", {
-          method: "POST",
-          body: JSON.stringify(data),
-        });
 
-        if (response.ok) {
-          const jsonResponse = await response.json();
-          console.log(jsonResponse);
-        } else {
-          console.log("POST request failed");
-        }
+      try {
+        const response = await axios.post("http://localhost:3000/users", data);
+        console.log(response.data);
       } catch (error) {
-        console.log("Error:", error);
+        console.error(error);
       }
     },
+    getUser() {
+      const response = axios.get("http://localhost:3000/users");
+      this.body = response;
+
+      console.log(response);
+    },
+  },
+  mounted() {
+    this.getUser();
   },
 });
 </script>
