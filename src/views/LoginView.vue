@@ -1,21 +1,40 @@
 <template>
-  <v-sheet width="300" class="mx-auto">
-    <v-form fast-fail @submit.prevent>
-      <v-text-field
-        v-model="firstName"
-        label="First name"
-        :rules="firstNameRules"
-      ></v-text-field>
+  <v-container
+    fluid
+    justify-center
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <v-card>
+      <v-toolbar dark color="primary">
+        <v-toolbar-title>Login Page</v-toolbar-title>
+      </v-toolbar>
+      <v-sheet width="500" class="mx-auto">
+        <v-form>
+          <v-text-field
+            v-model="firstName"
+            label="First name"
+            :rules="firstNameRules"
+          ></v-text-field>
 
-      <v-text-field
-        v-model="lastName"
-        label="Last name"
-        :rules="lastNameRules"
-      ></v-text-field>
-
-      <v-btn type="submit" block class="mt-2">Submit</v-btn>
-    </v-form>
-  </v-sheet>
+          <v-text-field
+            v-model="lastName"
+            label="Last name"
+            :rules="lastNameRules"
+          ></v-text-field>
+          <v-card-actions>
+            <v-btn type="submit" color="primary" class="mx-auto"
+              >Giriş Yap</v-btn
+            ></v-card-actions
+          >
+        </v-form>
+      </v-sheet>
+    </v-card>
+  </v-container>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -42,3 +61,11 @@ export default defineComponent({
   }),
 });
 </script>
+<style scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+</style>
