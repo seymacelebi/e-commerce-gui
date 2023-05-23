@@ -8,7 +8,7 @@
     >
 
     <v-col
-      cols="8"
+      cols="12"
       class="mt-15"
       v-for="(item, index) in getFavoriteProduct"
       :key="index"
@@ -26,11 +26,20 @@
                     ></v-img>
                   </v-avatar>
                 </v-col>
-                <v-col cols="8">
+                <v-col cols="4">
                   <v-card-title class="text-h5">
                     {{ item.title }}
                   </v-card-title>
                   <v-card-subtitle> {{ item.description }}</v-card-subtitle>
+                </v-col>
+                <v-col cols="4">
+                  <v-btn
+                    variant="outlined"
+                    class="mx-auto"
+                    @click="removeFavorite(item)"
+                  >
+                    Favorilerden Çıkar
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card>
@@ -53,13 +62,12 @@ export default defineComponent({
   }),
   computed: {
     ...mapState(useProductStore, ["getFavoriteProduct"]),
-    favoriteProducts() {
-      const favoritesStore = useProductStore();
-      return favoritesStore.favoriteProducts;
-    },
   },
   methods: {
-    ...mapActions(useProductStore, ["addFavoriteProduct"]),
+    ...mapActions(useProductStore, ["removeFavoriteProduct"]),
+    removeFavorite(productId: number) {
+      this.removeFavoriteProduct(productId);
+    },
   },
 });
 </script>

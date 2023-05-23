@@ -56,7 +56,7 @@ export const useProductStore = defineStore("product", {
       console.log("product", product);
     },
     removeFavoriteProduct(product: Product) {
-      const index = this.favoriteProducts.findIndex(
+      const index = this.favoriteProducts.find(
         (favProduct) => favProduct.id === product.id
       );
       if (index !== -1) {

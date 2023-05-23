@@ -1,12 +1,12 @@
 {
   "users": [
     {
-      "id": "1",
+      "email": "email@email.com",
       "firstName": "Some",
       "lastName": "Detail",
       "phoneNumber": "05075334525",
-      "email": "email@email.com",
-      "password": "123"
+      "password": "15666",
+      "id": "1"
     },
     {
       "email": "deneme@deneme.com",

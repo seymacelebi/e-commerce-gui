@@ -8,7 +8,6 @@
               <v-text-field
                 ref="name"
                 v-model="body.firstName"
-                :rules="[() => !!firstName || 'This field is required']"
                 :error-messages="errorMessages"
                 label="İsim"
                 placeholder="İsim"
@@ -18,8 +17,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="lastName"
-                :rules="[() => !!lastName || 'This field is required']"
+                v-model="body.lastName"
                 :error-messages="errorMessages"
                 label="Soyisim"
                 required
@@ -29,8 +27,7 @@
 
           <v-text-field
             ref="name"
-            v-model="email"
-            :rules="[() => !!email || 'This field is required']"
+            v-model="body.email"
             :error-messages="errorMessages"
             label="Email"
             placeholder="John Doe"
@@ -38,8 +35,7 @@
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="password"
-            :rules="[() => !!password || 'This field is required']"
+            v-model="body.password"
             :error-messages="errorMessages"
             label="Şifre"
             placeholder="John Doe"
@@ -47,8 +43,7 @@
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="phoneNumber"
-            :rules="[() => !!phoneNumber || 'This field is required']"
+            v-model="body.phoneNumber"
             :error-messages="errorMessages"
             label="Telefon Numarası"
             placeholder="John Doe"
@@ -69,7 +64,7 @@
               <span>Refresh form</span>
             </v-tooltip>
           </v-slide-x-reverse-transition>
-          <v-btn color="primary" variant="text" @click="createUser">
+          <v-btn color="primary" variant="text" @click="updateUser">
             Submit
           </v-btn>
         </v-card-actions>
@@ -78,6 +73,8 @@
   </v-row>
 </template>
 <script lang="ts">
+import { useToast } from "vue-toastification";
+const toast = useToast();
 import { defineComponent } from "vue";
 import axios from "axios";
 export default defineComponent({
@@ -109,11 +106,26 @@ export default defineComponent({
         console.error(error);
       }
     },
-    getUser() {
-      const response = axios.get("http://localhost:3000/users");
-      this.body = response;
-
-      console.log(response);
+    async getUser() {
+      const response = await axios.get("http://localhost:3000/users/1");
+      this.body = response.data;
+      console.log(response.data);
+    },
+    async updateUser() {
+      const data = {
+        email: this.body.email,
+        firstName: this.body.firstName,
+        lastName: this.body.lastName,
+        phoneNumber: this.body.phoneNumber,
+        password: this.body.password,
+      };
+      try {
+        const response = await axios.put("http://localhost:3000/users/1", data);
+        console.log(response, "put");
+        toast.success("Güncelleme Yapıldı");
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   mounted() {

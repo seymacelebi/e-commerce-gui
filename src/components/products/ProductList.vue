@@ -76,7 +76,7 @@
           <v-btn icon @click.stop="addFavorite(product)" variant="plain">
             <v-icon :icon="checkFavIcon(product)" color="info"></v-icon>
           </v-btn> -->
-          <v-btn @click="addToFavorites(product)">
+          <v-btn color="pink" @click="addToFavorites(product)">
             <v-icon> mdi-heart </v-icon></v-btn
           >
           <!-- <v-btn @click="removeFromFavorites(product)"></v-btn>
@@ -123,6 +123,7 @@ export default defineComponent({
     addToFavorites(product: any) {
       const favoritesStore = useProductStore();
       favoritesStore.addFavoriteProduct(product);
+      toast.success("Favorilere Eklendi");
     },
     removeFromFavorites(product: any) {
       const favoritesStore = useProductStore();
