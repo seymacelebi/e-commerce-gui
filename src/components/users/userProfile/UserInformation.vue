@@ -7,7 +7,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="body.firstName"
+                v-model="userDetail.firstName"
                 :error-messages="errorMessages"
                 label="İsim"
                 placeholder="İsim"
@@ -17,7 +17,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="body.lastName"
+                v-model="userDetail.lastName"
                 :error-messages="errorMessages"
                 label="Soyisim"
                 required
@@ -27,7 +27,7 @@
 
           <v-text-field
             ref="name"
-            v-model="body.email"
+            v-model="userDetail.email"
             :error-messages="errorMessages"
             label="Email"
             placeholder="John Doe"
@@ -35,7 +35,7 @@
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="body.password"
+            v-model="userDetail.password"
             :error-messages="errorMessages"
             label="Şifre"
             placeholder="John Doe"
@@ -43,7 +43,7 @@
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="body.phoneNumber"
+            v-model="userDetail.phoneNumber"
             :error-messages="errorMessages"
             label="Telefon Numarası"
             placeholder="John Doe"
@@ -75,11 +75,12 @@
 <script lang="ts">
 import { useToast } from "vue-toastification";
 const toast = useToast();
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import axios from "axios";
 export default defineComponent({
   name: "UserInformation",
   data: () => ({
+    userDetail: inject("userDetail") as any,
     errorMessages: "",
     body: {} as any,
     email: "",
@@ -106,11 +107,7 @@ export default defineComponent({
         console.error(error);
       }
     },
-    async getUser() {
-      const response = await axios.get("http://localhost:3000/users/1");
-      this.body = response.data;
-      console.log(response.data);
-    },
+
     async updateUser() {
       const data = {
         email: this.body.email,
@@ -128,8 +125,6 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
-    this.getUser();
-  },
+  mounted() {},
 });
 </script>

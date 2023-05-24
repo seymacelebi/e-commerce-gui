@@ -46,14 +46,20 @@
   </v-container>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import AppHeader from "../AppHeader.vue";
-
+import axios from "axios";
 export default defineComponent({
   name: "UserProfile",
+  provide() {
+    return {
+      userDetail: computed(() => this.userDetail),
+    };
+  },
   components: { AppHeader },
   data: () => ({
     selectedItem: 0,
+    userDetail: {} as any,
     items: [
       { name: "information", icon: "mdi-account", text: "Kişisel Bilgiler" },
       { name: "order", icon: "mdi-package-variant-closed", text: "Siparişler" },
@@ -63,10 +69,20 @@ export default defineComponent({
       { name: "logout", icon: "mdi-exit-to-app", text: "Çıkış Yap" },
     ],
   }),
+  methods: {
+    async getUser() {
+      const response = await axios.get("http://localhost:3000/users/1");
+      this.userDetail = response.data;
+      console.log(response.data);
+    },
+  },
   watch: {
     $route(newRoute, lastRoute) {
       console.log(newRoute, "new", lastRoute, "last");
     },
+  },
+  mounted() {
+    this.getUser();
   },
 });
 </script>

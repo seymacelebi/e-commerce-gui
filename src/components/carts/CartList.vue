@@ -82,7 +82,11 @@
         </div>
       </v-card> -->
     </v-col>
-    <v-col cols="4" class="mt-15 ml-15 top-right">
+    <v-col
+      cols="4"
+      class="mt-15 ml-15 top-right"
+      v-if="getBasketGetters.length !== 0"
+    >
       <v-card class="auto ml-15" max-width="344">
         <v-card-item>
           <div>
@@ -108,6 +112,11 @@
         </v-card-actions>
       </v-card>
     </v-col>
+    <v-col v-else cols="12" class="mt-5">
+      <v-alert density="compact" icon="mdi-alert-circle">
+        Sepette ürün bulunamadı.
+      </v-alert></v-col
+    >
   </v-row>
 </template>
 <script lang="ts">

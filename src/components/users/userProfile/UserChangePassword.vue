@@ -4,6 +4,7 @@
       <v-card ref="form">
         <v-card-text>
           <v-text-field
+            v-model="password1"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show2 ? 'text' : 'password'"
@@ -15,6 +16,7 @@
           ></v-text-field>
 
           <v-text-field
+            v-model="password2"
             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min]"
             :type="show2 ? 'text' : 'password'"
@@ -46,26 +48,52 @@
               <span>Refresh form</span>
             </v-tooltip>
           </v-slide-x-reverse-transition>
-          <v-btn color="primary" variant="text" @click="submit"> Submit </v-btn>
+          <v-btn color="primary" variant="text" @click="updatePassword">
+            Submit
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import axios from "axios";
+import { defineComponent, inject } from "vue";
 
 export default defineComponent({
   name: "UserChangePassword",
   data: () => ({
+    userDetail: inject("inventoryDetail") as any,
+    formHasErrors: false,
     show1: false,
     show2: true,
     password: "Password",
+    password1: "",
+    password2: "",
     rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
+      required: (value: any) => !!value || "Required.",
+      min: (v: any) => v.length >= 8 || "Min 8 characters",
       emailMatch: () => `The email and password you entered don't match`,
     },
   }),
+  methods: {
+    resetForm() {},
+    async updatePassword() {
+      const data = {
+        password1: this.password1,
+        password2: this.password2,
+      };
+      try {
+        if ((this.password1 = this.password2)) {
+          const response = await axios.put("http://localhost:3000/users", data);
+          console.log(response, "put");
+        } else {
+          console.log("aynı değil");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
 });
 </script>

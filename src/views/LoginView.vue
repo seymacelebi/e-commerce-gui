@@ -16,18 +16,18 @@
       <v-sheet width="500" class="mx-auto">
         <v-form>
           <v-text-field
-            v-model="firstName"
-            label="First name"
-            :rules="firstNameRules"
+            v-model="email"
+            label="Email"
+            class="px-6 py-8"
           ></v-text-field>
 
           <v-text-field
-            v-model="lastName"
-            label="Last name"
-            :rules="lastNameRules"
+            v-model="password"
+            label="Şifre"
+            class="px-6"
           ></v-text-field>
           <v-card-actions>
-            <v-btn type="submit" color="primary" class="mx-auto"
+            <v-btn type="submit" color="primary" class="mx-auto" @click="signIn"
               >Giriş Yap</v-btn
             ></v-card-actions
           >
@@ -37,28 +37,29 @@
   </v-container>
 </template>
 <script lang="ts">
+import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
-
+import { useUserStore } from "../store/userStore";
 export default defineComponent({
   name: "LoginView",
   data: () => ({
-    firstName: "",
-    firstNameRules: [
-      (value) => {
-        if (value?.length > 3) return true;
-
-        return "First name must be at least 3 characters.";
-      },
-    ],
-    lastName: "123",
-    lastNameRules: [
-      (value) => {
-        if (/[^0-9]/.test(value)) return true;
-
-        return "Last name can not contain digits.";
-      },
-    ],
+    email: "",
+    password: "",
   }),
+  computed: {
+    ...mapState(useUserStore, ["getUser"]),
+    ...mapActions(useUserStore, ["signIn"]),
+  },
+  methods: {
+    async signIn() {
+      const userStore = useUserStore();
+      await userStore.signIn(this.email, this.password);
+      this.$router.push({ name: "ProductList" });
+    },
+  },
+  mounted() {
+    this.getUser;
+  },
 });
 </script>
 <style scoped>

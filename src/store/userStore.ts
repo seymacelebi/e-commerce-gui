@@ -9,6 +9,23 @@ export const useUserStore = defineStore("user", {
       password: String(),
     };
   },
-  getters: {},
-  actions: {},
+  getters: {
+    getUser: (state) => {
+      console.log("user");
+      return state.user;
+    },
+  },
+  actions: {
+    async signIn(email: any, password: any) {
+      const res = await fetch("https://localhost:3000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const user = await res.json();
+      this.user = user;
+    },
+  },
 });
