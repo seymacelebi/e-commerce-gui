@@ -20,6 +20,16 @@
           <v-toolbar flat color="transparent" class="mt-5">
             <v-toolbar-title class="text-h6">All Product</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-btn
+              variant="tonal"
+              color="green"
+              @click="
+                $router.push({
+                  name: 'HomeView',
+                })
+              "
+              >See All</v-btn
+            >
           </v-toolbar>
           <ProductList />
           <v-card flat color="#E2F2E5" class="rounded-xl mt-8"> </v-card>

@@ -7,7 +7,7 @@
       <v-toolbar-title
         @click="
           $router.push({
-            name: 'HomeView',
+            name: 'ProductList',
           })
         "
         >ECommerce</v-toolbar-title
