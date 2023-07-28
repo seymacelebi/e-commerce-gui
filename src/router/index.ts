@@ -12,6 +12,11 @@ const routes = [
     name: "LoginView",
     component: () => import("../views/LoginView.vue"),
   },
+  {
+    path: "/payment",
+    name: "PaymentForm",
+    component: () => import("../components/payments/PaymentForm.vue"),
+  },
 
   {
     path: "/productList",

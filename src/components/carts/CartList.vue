@@ -106,6 +106,11 @@
             class="text-h6 text-white"
             :size="buttonResponsive"
             variant="flat"
+            @click="
+              $router.push({
+                name: 'PaymentForm',
+              })
+            "
           >
             Ödeme Yap
           </v-btn>
