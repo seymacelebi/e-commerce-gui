@@ -14,11 +14,8 @@
             <v-card color="white">
               <v-row>
                 <v-col cols="4">
-                  <v-avatar class="ma-3" size="250" rounded="0">
-                    <v-img
-                      :src="item.images[0]"
-                      class="ml-15 align-center"
-                    ></v-img>
+                  <v-avatar class="ma-3" size="300" rounded="0">
+                    <v-img :src="item.image" class="ml-15 align-center"></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col cols="8">
@@ -50,37 +47,6 @@
           </v-col>
         </v-row>
       </v-card>
-      <!-- <v-card color="white" class="ml-15 mt-10" :value="index">
-        <div class="d-flex flex-no-wrap justify-space-between">
-          <v-avatar class="ma-3" size="125" rounded="0">
-            <v-img :src="item.images[0]"></v-img>
-          </v-avatar>
-          <div>
-            <v-card-title class="text-h5"> {{ item.title }} </v-card-title>
-
-            <v-card-title>{{ item.price }} $</v-card-title>
-            <v-card-subtitle> {{ item.description }}</v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn
-                variant="outlined"
-                size="small"
-                icon="mdi-plus"
-                @click="addProduct(item)"
-              >
-              </v-btn>
-              <v-card-title> {{ item.quantity + 1 }} </v-card-title>
-              <v-btn
-                variant="outlined"
-                size="small"
-                icon="mdi-minus"
-                @click.prevent="removeProduct(item)"
-              >
-              </v-btn>
-            </v-card-actions>
-          </div>
-        </div>
-      </v-card> -->
     </v-col>
     <v-col
       cols="4"
@@ -143,18 +109,30 @@ export default defineComponent({
       return this.$vuetify.display.md ? "small" : "default";
     },
   },
+  created() {
+    // Tarayıcı hafızasından sepet verilerini yükle
+    this.loadCartFromLocalStorage();
+  },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket", "setDeleteBasket"]),
-
-    addProduct(product: any) {
+    addProduct(product:any) {
       this.setAddBasket(product);
-      this.product.quantity++;
-      console.log("ekledi", this.getBasketGetters);
+      product.quantity++;
+      this.saveCartToLocalStorage(); // Sepet verilerini güncellemeyi unutmayın
     },
-
-    removeProduct(productId: number) {
+    removeProduct(productId:any) {
       this.setDeleteBasket(productId);
+      this.saveCartToLocalStorage();
     },
+    // addProduct(product: any) {
+    //   this.setAddBasket(product);
+    //   this.product.quantity++;
+    //   console.log("ekledi", this.getBasketGetters);
+    // },
+
+    // removeProduct(productId: number) {
+    //   this.setDeleteBasket(productId);
+    // },
   },
   components: { AppHeader },
 });
