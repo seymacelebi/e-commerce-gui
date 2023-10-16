@@ -4,7 +4,13 @@
       <v-row>
         <v-col v-for="(product, index) in getFilterCategory" :key="index">
           <v-card class="mx-auto" max-width="400">
-            <v-img :src="product.images[0]" alt="Product Image" height="300px" cover> </v-img>
+            <v-img
+             :src="product.image"
+              alt="Product Image"
+              height="300px"
+              cover
+            >
+            </v-img>
 
             <v-card-title> {{ product.title }} </v-card-title>
 
@@ -72,16 +78,9 @@
             "
             >Detaya Git</v-btn
           >
-          <!-- 
-          <v-btn icon @click.stop="addFavorite(product)" variant="plain">
-            <v-icon :icon="checkFavIcon(product)" color="info"></v-icon>
-          </v-btn> -->
           <v-btn color="pink" @click="addToFavorites(product)">
             <v-icon> mdi-heart </v-icon></v-btn
           >
-          <!-- <v-btn @click="removeFromFavorites(product)"></v-btn>
-            <v-icon> mdi-shopping </v-icon></v-btn
-          > -->
 
           <v-btn color="green" @click="addProduct(product)">
             <v-icon> mdi-shopping </v-icon>
@@ -98,15 +97,9 @@ import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
 import { defineComponent } from "vue";
-import { FavoriteObjectType } from "../../models/types";
 export default defineComponent({
   name: "ProductList",
   data: () => ({
-    products: [] as any,
-    data: String(),
-    selectedCategory: null,
-    titleObjectItem: {} as any,
-    categories: [] as any,
   }),
 
   computed: {
@@ -134,20 +127,6 @@ export default defineComponent({
       this.setAddBasket(product);
       toast.success("Sepete Eklendi");
     },
-    addFavorite(child: FavoriteObjectType) {
-      this.addOrRemoveFavorite(child);
-    },
-
-    checkFavIcon(child: FavoriteObjectType): string {
-      const favorites = this.getFavoritesState(); // getFavoritesState fonksiyonunu çağırarak favorileri al
-
-      const findIndex = favorites.findIndex((fav) => fav.name === child.name);
-      if (findIndex === -1) {
-        return "mdi-star-outline";
-      } else {
-        return "mdi-star";
-      }
-    },
   },
 
   mounted() {
@@ -155,7 +134,6 @@ export default defineComponent({
     this.getBasketGetters;
     this.getFilterCategory;
   },
-  watch: {},
 });
 </script>
 

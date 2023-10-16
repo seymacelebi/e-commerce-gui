@@ -5,30 +5,24 @@
       <v-row>
         <v-col cols="12">
           <v-toolbar flat color="transparent">
-            <v-toolbar-title class="text-h6">Category</v-toolbar-title>
+            <v-toolbar-title class="text-h6">Kategoriler</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn-toggle v-model="toggle_exclusive" group color="#49D9A0">
-              <!-- <v-btn>
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-btn>
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-btn> -->
             </v-btn-toggle>
           </v-toolbar>
           <CategoryList />
           <v-toolbar flat color="transparent" class="mt-5">
-            <v-toolbar-title class="text-h6">All Product</v-toolbar-title>
+            <v-toolbar-title class="text-h6">Bütün Ürünler</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn
               variant="tonal"
               color="green"
               @click="
                 $router.push({
-                  name: 'HomeView',
+                  name: 'ProductList',
                 })
               "
-              >See All</v-btn
+              >Hepsini Gör</v-btn
             >
           </v-toolbar>
           <ProductList />
