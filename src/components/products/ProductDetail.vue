@@ -2,23 +2,10 @@
   <v-app>
     <AppHeader />
     <v-container fluid>
-      <v-row v-for="(product, index) in dataId" :key="index">
+      <v-row >
         <v-col>
           <v-card>
-            <v-carousel>
-              <v-carousel-item v-for="(item, i) in product.images" :key="i">
-                <v-card>
-                  <v-img :src="item"></v-img>
-                </v-card>
-              </v-carousel-item>
-            </v-carousel>
-            <!-- <div align="center" justify="center">
-              <v-img max-width="800" contain :src="product.images[0]"></v-img>
-            </div> -->
-
-            <!-- <v-card-title primary-title class="mx-auto">{{
-              product.title
-            }}</v-card-title> -->
+            <v-img max-width="500" contain :src="productList.image"></v-img>
             <v-card-actions> </v-card-actions>
           </v-card>
         </v-col>
@@ -36,20 +23,20 @@
             <v-card-item>
               <v-card-title>
                 <p class="text-h4 text--primary">
-                  {{ product.title }}
+                  {{ productList.title }}
                 </p></v-card-title
               >
             </v-card-item>
 
             <v-card-text>
               <div>
-                <p class="text-h6 text--primary">{{ product.price }} $</p>
+                <p class="text-h6 text--primary">{{ productList.price }} $</p>
               </div>
             </v-card-text>
             <v-card-text>
               <div>
                 <p class="text-h6 text--primary">
-                  {{ product.description }}
+                  {{ productList.description }}
                 </p>
               </div>
             </v-card-text>
@@ -86,39 +73,19 @@ export default defineComponent({
   name: "ProductDetail",
   data() {
     return {
-      product: [] as any,
-      dataId: {},
+      productList: [] as any,
       products: inject<Product>("products"),
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-        },
-      ],
     };
   },
 
   components: { AppHeader },
-  mounted() {
-    // this.getProductById();
-  },
   computed: {
     ...mapState(useCartStore, ["getBasketGetters"]),
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
-    getProductById(): Object {
-      return (this.dataId = this.getProductGetters.filter(
-        (x: any) => x.id === Number(this.$route.params.id)
-      ));
-    },
+  },
+  mounted(){
+    this.getProductById();
   },
   methods: {
     ...mapActions(useCartStore, ["setAddBasket"]),
@@ -127,34 +94,18 @@ export default defineComponent({
       toast.success("Sepete Eklendi");
       console.log("ekledi", this.getBasketGetters);
     },
-    // getProductListById() {
-    //   const id = +this.$route.params.id;
-    //   axios
-    //     .get("http://localhost:3000/products/" + id)
-    //     .then((res: any) => {
-    //       this.product = res.data[0] || [];
-    //     });
-    // },
-    // async getProductById() {
-    //   const id = +this.$route.params.id;
-    //   const response = await fetch(
-    //     "https://api.escuelajs.co/api/v1/products?offset=0&limit=70" + id
-    //   );
-    //   const data = await response.json();
-    //   this.product = data;
-    //   console.log(this.product, "product");
-    // },
-    getProductById() {
-      this.dataId = this.getProductGetters.filter(
-        (x: any) => x.id === Number(this.$route.params.id)
-      );
+    async getProductById() {
+      const id = +this.$route.params.id;
+      const response = await fetch("https://fakestoreapi.com/products/" + id);
+      const data = await response.json();
+      this.productList = data;
+      console.log(this.productList, "product1212");
     },
   },
   watch: {
     getProductById: {
       handler() {
         this.getProductById;
-        console.log("DETAY", this.getProductById);
       },
     },
   },

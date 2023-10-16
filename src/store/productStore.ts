@@ -83,9 +83,10 @@ export const useProductStore = defineStore("product", {
     },
     async getAllProduct() {
       // const response = await fetch('https://fakestoreapi.com/products')
-      const response = await fetch(
-        "https://api.escuelajs.co/api/v1/products?offset=0&limit=51"
-      );
+      // const response = await fetch(
+      //   "https://api.escuelajs.co/api/v1/products?offset=0&limit=51"
+      // );
+      const response = await fetch("https://fakestoreapi.com/products")
       const data = await response.json();
       this.product = data;
       console.log(this.product, "pro");
