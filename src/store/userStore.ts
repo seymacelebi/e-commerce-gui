@@ -3,7 +3,7 @@ import router from "../router";
 export const useUserStore = defineStore("user", {
   state: () => {
     return {
-      user: {} as any,
+      user: null as any,
       isAuthenticated: false,
       email: String(),
       password: String(),
@@ -18,7 +18,7 @@ export const useUserStore = defineStore("user", {
   },
   actions: {
     async fetchUser() {
-      const res = await fetch("https://localhost:3000/user");
+      const res = await fetch("https://fakestoreapi.com/users");
 
       const user = await res.json();
       this.user = user;
@@ -35,7 +35,7 @@ export const useUserStore = defineStore("user", {
       this.user = user;
     },
     async signIn(email: any, password: any) {
-      const res = await fetch("https://localhost:3000/users", {
+      const res = await fetch("https://fakestoreapi.com/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,20 +45,30 @@ export const useUserStore = defineStore("user", {
       const user = await res.json();
       this.user = user;
     },
-    async login(email: any, password: any) {
+    async login(username: any, password: any) {
       try {
-        const user = await fetchWrapper.post(
-          `${"http://localhost:3000"}/authenticate`,
-          { email, password }
-        );
-        // update pinia state
-        this.user = user;
-        // store user details and jwt in local storage to keep user logged in between page refreshes
-        localStorage.setItem("user", JSON.stringify(user));
-        // redirect to previous url or default to home page
-        router.push(this.returnUrl || "/");
+        const response = await fetch("https://fakestoreapi.com/auth/login", {
+          method: "POST",
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+
+        if (response.status === 200) {
+          this.user = data.user;
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(user));        
+            console.log(data);
+        } else {
+          this.user = null;
+        }
       } catch (error) {
-        console.log("hata");
+        this.user = null;
       }
     },
   },

@@ -55,7 +55,7 @@ export default defineComponent({
   }),
   computed: {
     ...mapState(useUserStore, ["getUser"]),
-    ...mapActions(useUserStore, ["signIn"]),
+    ...mapActions(useUserStore, ["login"]),
   },
   methods: {
     handleLogin() {

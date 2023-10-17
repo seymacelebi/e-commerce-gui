@@ -42,7 +42,7 @@ const fakeApi = {
     // Fake API çağrısı yapılacak, aslında backend ile iletişim yerine basit bir simülasyon yapılıyor
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (username === "admin" && password === "password") {
+        if (username === "mor_2314" && password === "83r5^_") {
           // Kimlik doğrulama başarılı ise, kullanıcı bilgilerini döndür
           resolve({
             user: {
