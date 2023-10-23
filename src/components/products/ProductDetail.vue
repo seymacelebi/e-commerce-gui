@@ -2,7 +2,7 @@
   <v-app>
     <AppHeader />
     <v-container fluid>
-      <v-row >
+      <v-row>
         <v-col>
           <v-card>
             <v-img max-width="500" contain :src="productList.image"></v-img>
@@ -43,7 +43,15 @@
 
             <v-divider class="mx-4 mb-1"></v-divider>
 
-            <div class="px-4"></div>
+            <div class="px-4">
+              <v-rating
+                hover
+                :length="5"
+                :size="32"
+                :model-value="3"
+                active-color="primary"
+              />
+            </div>
 
             <v-card-actions>
               <v-btn
@@ -84,7 +92,7 @@ export default defineComponent({
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapActions(useProductStore, ["getAllProduct"]),
   },
-  mounted(){
+  mounted() {
     this.getProductById();
   },
   methods: {

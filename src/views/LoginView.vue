@@ -14,7 +14,7 @@
         <v-toolbar-title>Login Page</v-toolbar-title>
       </v-toolbar>
       <v-sheet width="500" class="mx-auto">
-        <v-form>
+        <v-form @submit.prevent="handleLogin">
           <v-text-field
             v-model="username"
             label="Email"
@@ -27,13 +27,10 @@
             class="px-6"
           ></v-text-field>
           <v-card-actions>
-            <v-btn
-              type="submit"
-              color="primary"
-              class="mx-auto"
-              @click="handleLogin"
-              >Giriş Yap</v-btn
-            ></v-card-actions
+            <button type="submit" color="primary" class="mx-auto">
+              Giriş Yap
+            </button>
+          </v-card-actions
           >
         </v-form>
       </v-sheet>
@@ -41,41 +38,29 @@
   </v-container>
 </template>
 <script lang="ts">
-import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
-import { useUserStore } from "../store/userStore";
-import axios from "axios";
 import { useAuthStore } from "../store/authStore";
-import router from "../router";
+
 export default defineComponent({
   name: "LoginView",
   data: () => ({
     username: "",
     password: "",
   }),
-  computed: {
-    ...mapState(useUserStore, ["getUser"]),
-    ...mapActions(useUserStore, ["login"]),
-  },
+  computed: {},
   methods: {
-    handleLogin() {
-      const authStore = useAuthStore();
-      authStore
-        .login(this.username, this.password)
-        .then(() => {
-          router.push({
-            name: "HomeView",
-          });
-          // Başarılı oturum açma işlemi gerçekleşti, yönlendirme yapabilirsiniz
-        })
-        .catch((error: any) => {
-          console.log(error, "error");
-        });
+    async handleLogin() {
+      try {
+        const authStore = useAuthStore();
+        await authStore.login(this.username, this.password);
+        
+      } catch (error) {
+        console.error("Giriş hatası:", error);
+        // Giriş hatası durumunda hata işleme ekleyebilirsiniz
+      }
     },
   },
-  mounted() {
-    this.getUser;
-  },
+  mounted() {},
 });
 </script>
 <style scoped>

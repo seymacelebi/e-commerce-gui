@@ -1,60 +1,55 @@
 import { defineStore } from "pinia";
+import { useRouter } from "vue-router";
+import router from "../router";
 
-// AuthStore'u tanımla
 export const useAuthStore = defineStore("auth", {
-  // Store durumu (state) tanımı
-  state: () => ({
-    user: null, // Kullanıcıyı temsil eden bir değişken, başlangıçta null
-    isAuthenticated: false, // Oturum açıldığında true olacak bir değişken
-  }),
-
-  // Store eylemleri (actions) tanımı
+  state: () => {
+    return {
+      isLoggedIn: false,
+      user: null as any,
+    };
+  },
+  getters: {},
   actions: {
-    // Oturum açma işlemi
-    async login(username: any, password: any) {
+    async login(username: string, password: string) {
       try {
-        // Fake API çağrısı yapılacak
-        const response = await fakeApi.login(username, password);
+        const response = await fetch("https://fakestoreapi.com/auth/login", {
+          method: "POST",
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-        // Kimlik doğrulama başarılı ise, kullanıcıyı oturum açmış olarak işaretleyin
-        this.user = response.user; // Kullanıcı bilgilerini saklayın
-        this.isAuthenticated = true; // isAuthenticated değerini true olarak ayarlayın
+        if (response.ok) {
+            console.log(response, "res")
+          const json = await response.json();
+          this.isLoggedIn = true;
+          this.user = {
+            username: json.username,
+          };
+        //   const router = useRouter();
+        //   router.push({ name: "HomeView" }); 
+        router.push({
+            name: "HomeView",
+        })
+
+          localStorage.setItem("authToken", json.token);
+        } else {
+          throw new Error("Giriş başarısız. Lütfen tekrar deneyin.");
+        }
       } catch (error) {
-        // Kimlik doğrulama başarısız oldu, hata işlemleri yapılabilir
-        console.error(error);
-        throw new Error("Kimlik doğrulama başarısız.");
+        console.error("Giriş hatası:", error);
+        throw error;
       }
     },
-
-    // Oturum kapatma işlemi
     logout() {
-      // Kullanıcıyı oturumdan çıkarmak için gerekli işlemler yapılır
-
-      this.user = null; // Kullanıcıyı null olarak sıfırlayın
-      this.isAuthenticated = false; // isAuthenticated değerini false olarak ayarlayarak oturum açık değil olarak işaretleyin
+      this.isLoggedIn = false;
+      this.user = null;
+      localStorage.removeItem("authToken");
     },
   },
 });
-
-// Fake API işlemlerini simüle eden bir nesne
-const fakeApi = {
-  async login(username: any, password: any) {
-    // Fake API çağrısı yapılacak, aslında backend ile iletişim yerine basit bir simülasyon yapılıyor
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (username === "mor_2314" && password === "83r5^_") {
-          // Kimlik doğrulama başarılı ise, kullanıcı bilgilerini döndür
-          resolve({
-            user: {
-              username,
-              // Diğer kullanıcı bilgilerini burada ekleyebilirsiniz
-            },
-          });
-        } else {
-          // Kimlik doğrulama başarısız ise, hata döndür
-          reject(new Error("Kimlik doğrulama başarısız."));
-        }
-      }, 1000); // 1 saniye süren bir fake işlem
-    });
-  },
-};

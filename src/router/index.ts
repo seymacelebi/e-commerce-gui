@@ -8,7 +8,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/login",
+    path: "/loginpage",
     name: "LoginView",
     component: () => import("../views/LoginView.vue"),
   },
@@ -83,7 +83,6 @@ const routes = [
     ],
   },
 
- 
   {
     path: "/cartList",
     name: "CartList",
