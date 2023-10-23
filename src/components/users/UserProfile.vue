@@ -22,20 +22,6 @@
                 <v-icon :icon="item.icon" class="d-none d-lg-flex"></v-icon>
               </template>
             </v-list-item>
-
-            <!-- <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              :value="item"
-              :title="item.name"
-              active-color="primary"
-              rounded="xl"
-              :to="{ name: item.name }"
-            >
-              <template v-slot:prepend>
-                <v-icon :icon="item.icon"></v-icon>
-              </template>
-            </v-list-item> -->
           </v-list>
         </v-card>
       </v-col>

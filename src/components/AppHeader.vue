@@ -64,8 +64,16 @@
       >
         <v-icon size="large">mdi-account</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+      <v-btn id="menu-activator">
+        <v-menu
+          v-model="openDialogLogin"
+          :close-on-content-click="false"
+          activator="#menu-activator"
+          :open-on-click="true"
+          location="bottom start"
+        >
+          <login-information></login-information>
+        </v-menu>
       </v-btn>
     </v-toolbar>
   </div>
@@ -76,9 +84,10 @@ import SearchDialog from "../components/dialogs/SearchDialog.vue";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../store/productStore";
 import { computed } from "vue";
+import LoginInformation from "../components/LoginInformation.vue";
 export default defineComponent({
   name: "AppHeader",
-  components: { SearchDialog },
+  components: { SearchDialog, LoginInformation },
 
   data: () => ({
     searchDialogVisible: false,

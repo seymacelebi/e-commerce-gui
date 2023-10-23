@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import TopClothesList from "../components/products/TopClothesList.vue";
+import { useAuthStore } from "../store/authStore";
 const routes = [
   {
     path: "/",
     name: "HomeView",
     component: HomeView,
+    meta: { requiresAuth: true }, // This route requires authentication
+
   },
   {
     path: "/loginpage",
@@ -94,5 +96,20 @@ const router = createRouter({
   routes,
   history: createWebHistory(),
 });
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  const authToken = localStorage.getItem("authToken");
+
+  if (to.meta.requiresAuth && !authToken) {
+    // The route requires authentication, but the token is missing
+    next({ name: "LoginView" }); // Redirect to the login page
+  } else if (to.name === "LoginView" && authToken) {
+    // Prevent logged-in users from accessing the login page
+    next({ name: "HomeView" }); // Redirect to the home page
+  } else {
+    next(); // Continue with the navigation
+  }
+});
+
 
 export default router;
