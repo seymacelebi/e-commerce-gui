@@ -50,6 +50,9 @@ export const useAuthStore = defineStore("auth", {
       this.isLoggedIn = false;
       this.user = null;
       localStorage.removeItem("authToken");
+      router.push({
+        name: "LoginView",
+    })
     },
   },
 });

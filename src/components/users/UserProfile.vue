@@ -23,8 +23,12 @@
               </template>
             </v-list-item>
           </v-list>
+          <v-btn icon>
+            <v-icon icon="mdi-exit-to-app" size="small"></v-icon>
+          </v-btn>
         </v-card>
       </v-col>
+
       <v-col class="fill-height" sm="8" md="10">
         <v-card class="fill-height pa-0" height="auto"> <RouterView /> </v-card
       ></v-col>
@@ -52,7 +56,6 @@ export default defineComponent({
       { name: "favorite", icon: "mdi-star", text: "Favoriler" },
       { name: "changepassword", icon: "mdi-lock", text: "Şifre Değiştir" },
       { name: "adress", icon: "mdi-home", text: "Adresler" },
-      { name: "logout", icon: "mdi-exit-to-app", text: "Çıkış Yap" },
     ],
   }),
   methods: {

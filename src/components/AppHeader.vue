@@ -64,16 +64,21 @@
       >
         <v-icon size="large">mdi-account</v-icon>
       </v-btn>
-      <v-btn id="menu-activator">
-        <v-menu
-          v-model="openDialogLogin"
-          :close-on-content-click="false"
-          activator="#menu-activator"
-          :open-on-click="true"
-          location="bottom start"
-        >
-          <login-information></login-information>
-        </v-menu>
+      <v-btn variant="text" class="ma-1 mx-0" stacked id="menu-activator">
+        <v-col class="pa-0">
+          <v-avatar color="red" variant="flat" size="small"
+            ><span>A</span></v-avatar
+          >
+          <v-menu
+            v-model="openDialogLogin"
+            :close-on-content-click="false"
+            activator="#menu-activator"
+            :open-on-click="true"
+            location="bottom start"
+          >
+            <login-information @openDialogLogin="openDialogLogin = $event" />
+          </v-menu>
+        </v-col>
       </v-btn>
     </v-toolbar>
   </div>
@@ -83,8 +88,8 @@ import { defineComponent } from "vue";
 import SearchDialog from "../components/dialogs/SearchDialog.vue";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../store/productStore";
+import  LoginInformation  from "../components/LoginInformation.vue"
 import { computed } from "vue";
-import LoginInformation from "../components/LoginInformation.vue";
 export default defineComponent({
   name: "AppHeader",
   components: { SearchDialog, LoginInformation },
@@ -92,6 +97,7 @@ export default defineComponent({
   data: () => ({
     searchDialogVisible: false,
     searchText: "",
+    openDialogLogin: false,
   }),
 
   computed: {
