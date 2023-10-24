@@ -87,6 +87,9 @@ export default defineComponent({
       try {
         const authStore = useAuthStore();
         await authStore.login(this.username, this.password);
+        localStorage.setItem("username", this.username);
+        localStorage.setItem("password", this.password);
+        console.log(this.username, this.password, "assasaas");
       } catch (error) {
         console.error("Giriş hatası:", error);
         // Giriş hatası durumunda hata işleme ekleyebilirsiniz

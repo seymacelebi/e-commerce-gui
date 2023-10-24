@@ -19,23 +19,22 @@ export const useAuthStore = defineStore("auth", {
             username,
             password,
           }),
+
           headers: {
             "Content-Type": "application/json",
           },
         });
 
         if (response.ok) {
-            console.log(response, "res")
+          console.log(response, "res");
           const json = await response.json();
           this.isLoggedIn = true;
           this.user = {
             username: json.username,
           };
-        //   const router = useRouter();
-        //   router.push({ name: "HomeView" }); 
-        router.push({
+          router.push({
             name: "HomeView",
-        })
+          });
 
           localStorage.setItem("authToken", json.token);
         } else {
@@ -50,9 +49,11 @@ export const useAuthStore = defineStore("auth", {
       this.isLoggedIn = false;
       this.user = null;
       localStorage.removeItem("authToken");
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
       router.push({
         name: "LoginView",
-    })
+      });
     },
   },
 });

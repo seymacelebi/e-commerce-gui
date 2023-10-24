@@ -59,11 +59,7 @@ export default defineComponent({
     ],
   }),
   methods: {
-    async getUser() {
-      const response = await axios.get("http://localhost:3000/users/1");
-      this.userDetail = response.data;
-      console.log(response.data);
-    },
+  
   },
   watch: {
     $route(newRoute, lastRoute) {
@@ -71,7 +67,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.getUser();
+   
   },
 });
 </script>

@@ -52,18 +52,7 @@
         "
       >
         <v-icon>mdi-cart</v-icon>
-      </v-btn>
-
-      <v-btn
-        icon
-        @click="
-          $router.push({
-            name: 'UserProfile',
-          })
-        "
-      >
-        <v-icon size="large">mdi-account</v-icon>
-      </v-btn>
+      </v-btn>   
       <v-btn variant="text" class="ma-1 mx-0" stacked id="menu-activator">
         <v-col class="pa-0">
           <v-avatar color="red" variant="flat" size="small"
