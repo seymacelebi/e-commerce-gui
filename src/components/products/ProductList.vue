@@ -5,7 +5,7 @@
         <v-col v-for="(product, index) in getFilterCategory" :key="index">
           <v-card class="mx-auto" max-width="400">
             <v-img
-             :src="product.image"
+              :src="product.image"
               alt="Product Image"
               height="300px"
               cover
@@ -97,11 +97,11 @@ import { useCartStore } from "../../store/cartStore";
 import { mapState, mapActions } from "pinia";
 import { useProductStore } from "../../store/productStore";
 import { defineComponent } from "vue";
+import AppHeader from "../AppHeader.vue"
 export default defineComponent({
   name: "ProductList",
-  data: () => ({
-  }),
-
+  data: () => ({}),
+  components: { AppHeader },
   computed: {
     ...mapState(useProductStore, ["getProductGetters"]),
     ...mapState(useCartStore, ["getBasketGetters"]),

@@ -7,9 +7,14 @@ export const useAuthStore = defineStore("auth", {
     return {
       isLoggedIn: false,
       user: null as any,
+      employeeId: 0 as any,
     };
   },
-  getters: {},
+  getters: {
+    getEmployeeId(state) {
+      return state.employeeId;
+    },
+  },
   actions: {
     async login(username: string, password: string) {
       try {
@@ -35,7 +40,6 @@ export const useAuthStore = defineStore("auth", {
           router.push({
             name: "HomeView",
           });
-
           localStorage.setItem("authToken", json.token);
         } else {
           throw new Error("Giriş başarısız. Lütfen tekrar deneyin.");
@@ -54,6 +58,9 @@ export const useAuthStore = defineStore("auth", {
       router.push({
         name: "LoginView",
       });
+    },
+    setEmployeeId(newSelectedEmployeeId: any) {
+      this.employeeId = newSelectedEmployeeId;
     },
   },
 });

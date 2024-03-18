@@ -42,7 +42,20 @@
           <v-icon icon="mdi-magnify" size="large"></v-icon>
         </v-col>
       </v-btn>
-      <search-dialog v-model="searchDialogVisible"></search-dialog>
+
+      <v-dialog v-model="searchDialogVisible" width="auto">
+        <v-card
+          max-width="400"
+          prepend-icon="mdi-update"
+          text="Your application will relaunch automatically after the update is complete."
+          title="Update in progress"
+        >
+          <template v-slot:actions>
+            <v-btn class="ms-auto" text="Ok" @click="dialog = false"></v-btn>
+          </template>
+        </v-card>
+      </v-dialog>
+      <!-- <search-dialog v-model="searchDialogVisible"></search-dialog> -->
       <v-btn
         icon
         @click="
@@ -52,7 +65,7 @@
         "
       >
         <v-icon>mdi-cart</v-icon>
-      </v-btn>   
+      </v-btn>
       <v-btn variant="text" class="ma-1 mx-0" stacked id="menu-activator">
         <v-col class="pa-0">
           <v-avatar color="red" variant="flat" size="small"
@@ -77,7 +90,7 @@ import { defineComponent } from "vue";
 import SearchDialog from "../components/dialogs/SearchDialog.vue";
 import { mapActions, mapState } from "pinia";
 import { useProductStore } from "../store/productStore";
-import  LoginInformation  from "../components/LoginInformation.vue"
+import LoginInformation from "../components/LoginInformation.vue";
 import { computed } from "vue";
 export default defineComponent({
   name: "AppHeader",
