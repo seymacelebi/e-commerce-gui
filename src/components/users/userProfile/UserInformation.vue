@@ -7,7 +7,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="userDetail.firstName"
+                :model-value="currentUser.name?.firstname"
                 :error-messages="errorMessages"
                 label="İsim"
                 placeholder="İsim"
@@ -17,7 +17,7 @@
             <v-col>
               <v-text-field
                 ref="name"
-                v-model="userDetail.lastName"
+                :model-value="currentUser.name?.lastname"
                 :error-messages="errorMessages"
                 label="Soyisim"
                 required
@@ -27,7 +27,7 @@
 
           <v-text-field
             ref="name"
-            v-model="userDetail.email"
+            :model-value="currentUser.email"
             :error-messages="errorMessages"
             label="Email"
             placeholder="John Doe"
@@ -35,18 +35,46 @@
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="userDetail.password"
+            :model-value="currentUser.username"
             :error-messages="errorMessages"
-            label="Şifre"
+            label="Kullanıcı Adı"
             placeholder="John Doe"
             required
           ></v-text-field>
           <v-text-field
             ref="name"
-            v-model="userDetail.phoneNumber"
+            :model-value="currentUser.phone"
             :error-messages="errorMessages"
             label="Telefon Numarası"
             placeholder="John Doe"
+            required
+          ></v-text-field>
+          <v-row>
+            <v-col>
+              <v-text-field
+                ref="name"
+                :model-value="currentUser.address?.city"
+                :error-messages="errorMessages"
+                label="Bulunduğu İl"
+                placeholder="Bulunduğu İl"
+                required
+              ></v-text-field
+            ></v-col>
+            <v-col>
+              <v-text-field
+                ref="name"
+                :model-value="currentUser.address?.zipcode"
+                :error-messages="errorMessages"
+                label="Posta Kodu"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-text-field
+            ref="name"
+            :model-value="currentUser.address?.street"
+            :error-messages="errorMessages"
+            label="Açık Adress"
             required
           ></v-text-field>
         </v-card-text>
@@ -75,56 +103,90 @@
 <script lang="ts">
 import { useToast } from "vue-toastification";
 const toast = useToast();
-import { defineComponent, inject } from "vue";
+import { defineComponent } from "vue";
 import axios from "axios";
 export default defineComponent({
   name: "UserInformation",
   data: () => ({
-    userDetail: inject("userDetail") as any,
     errorMessages: "",
     body: {} as any,
-    email: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    phoneNumber: "",
+    users: [] as any,
+    currentUser: {} as any,
     formHasErrors: false,
+    updatedUser: null,
+    userId: 0 as any,
   }),
   methods: {
-    async createUser() {
-      const data = {
-        email: this.email,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        phoneNumber: this.phoneNumber,
-        password: this.password,
-      };
-
+    async fetchUsers() {
       try {
-        const response = await axios.post("http://localhost:3000/users", data);
-        console.log(response.data);
+        const response = await axios.get("https://fakestoreapi.com/users");
+        this.users = response.data;
+
+        // localStorage'dan kullanıcı adını al
+        const localStorageUsername = localStorage.getItem("username");
+
+        // localStorage'daki kullanıcı adını users dizisinde ara
+        if (localStorageUsername) {
+          this.currentUser = this.users.find(
+            (user: any) => user.username === localStorageUsername
+          );
+          this.userId = this.currentUser.id;
+          console.log(this.currentUser, "current");
+          if (!this.currentUser) {
+            console.log("User not found");
+          }
+        } else {
+          console.log("No username found in localStorage");
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching users:", error);
       }
     },
-
     async updateUser() {
-      const data = {
-        email: this.body.email,
-        firstName: this.body.firstName,
-        lastName: this.body.lastName,
-        phoneNumber: this.body.phoneNumber,
-        password: this.body.password,
-      };
       try {
-        const response = await axios.put("http://localhost:3000/users/1", data);
-        console.log(response, "put");
-        toast.success("Güncelleme Yapıldı");
+        console.log(this.userId, "userId");
+        const response = await fetch(
+          `https://fakestoreapi.com/users/${this.userId}`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              email: "John@gmail.com",
+              username: "johnd",
+              password: "m38rmF$",
+              name: {
+                firstname: "John",
+                lastname: "Doe",
+              },
+              address: {
+                city: "kilcoole",
+                street: "7835 new road",
+                number: 3,
+                zipcode: "12926-3874",
+                geolocation: {
+                  lat: "-37.3159",
+                  long: "81.1496",
+                },
+              },
+              phone: "1-570-236-7033",
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to update user.");
+        }
+
+        this.updatedUser = await response.json();
+        toast.success("Değişiklik Kaydedildi");
+
+        console.log(this.updatedUser, "sss");
       } catch (error) {
         console.error(error);
       }
     },
   },
-  mounted() {},
+  mounted() {
+    this.fetchUsers();
+  },
 });
 </script>

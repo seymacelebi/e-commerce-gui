@@ -20,7 +20,7 @@
                 <v-col cols="4">
                   <v-avatar class="ma-3" size="200" rounded="0">
                     <v-img
-                      :src="item.images[0]"
+                      :src="item.image"
                       class="ml-15 align-center"
                     ></v-img>
                   </v-avatar>

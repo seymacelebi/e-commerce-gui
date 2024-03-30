@@ -80,12 +80,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useAuthStore } from "../store/authStore";
 
 const username = ref("");
 const password = ref("");
 const visible = ref(false);
+const firstname = ref ("");
 
 const handleLogin = async () => {
   try {
@@ -96,7 +97,12 @@ const handleLogin = async () => {
   } catch (error) {
     console.error("Giriş hatası:", error);
   }
+
 };
+onMounted(()=> console.log("çalıştı"))
+  const fullName = computed(()=> {
+    return firstname.value + ' '+ lastname.value
+  })
 </script>
 
 <style scoped>

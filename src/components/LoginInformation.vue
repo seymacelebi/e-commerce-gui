@@ -6,12 +6,12 @@
           <v-list color="transparent" class="d-flex flex-wrap">
             <v-list-item>
               <v-avatar color="red" variant="flat" size="small">
-                <span>deneme</span>
+                <span>{{ localStorageUsername }}</span>
               </v-avatar>
             </v-list-item>
             <v-list-item>
               <span class="text-subtitle-2 text-blue-grey-lighten-1"
-                >deneem</span
+                >Hoşgeldin! {{ localStorageUsername }}</span
               >
             </v-list-item>
           </v-list>
@@ -57,6 +57,7 @@ export default defineComponent({
   name: "LoginInformation",
   data() {
     return {
+      localStorageUsername: null as any,
       items: [
         { name: "information", icon: "mdi-account", text: "Kişisel Bilgiler" },
         {
@@ -71,10 +72,16 @@ export default defineComponent({
       ],
     };
   },
+  async created() {
+    await this.getUserName();
+  },
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
     closeCard() {
       this.logout();
+    },
+    async getUserName() {
+      this.localStorageUsername = localStorage.getItem("username");
     },
   },
 });
